@@ -127,6 +127,8 @@ var Reveal = (function(){
     dom.cnt_vert     = document.querySelector('#cnt-vert');
     dom.cnt_vert_all = document.querySelector('#cnt-vert-all');
 
+    dom.title_orig   = document.title;
+
 		if ( config.controls ) {
 			dom.controls = document.querySelector( '.reveal .controls' );
 			dom.controlsLeft = document.querySelector( '.reveal .controls .left' );
@@ -790,6 +792,13 @@ var Reveal = (function(){
   dom.cnt_hori.innerHTML     = indexh +1;
   dom.cnt_vert_all.innerHTML = vert_all +1;
   dom.cnt_vert.innerHTML     = indexv +1;
+
+// adjust title
+ if (indexh ==0 && indexv ==0) {
+   document.title = dom.title_orig;
+ } else {
+   document.title = dom.title_orig + " - " + (indexh+1) + "/" + (indexv+1);
+ }
 
 		// Close the overview if it's active
 		if( overviewIsActive() ) {
