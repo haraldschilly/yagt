@@ -129,7 +129,17 @@ body {
 	background: rgba(255,255,255,0.1);
 	border: 5px solid rgba(255,255,255,1);
   border-radius: 5px;
-	
+}
+
+	.reveal a:hover img {
+		background: rgba(255,255,255,0.2);
+		border-color: rgb(241, 78, 50);
+	}
+
+.reveal section img:not(.noborder) {
+	border: 5px solid rgba(255,255,255,1);
+  border-radius: 5px;
+
 	-webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
 	   -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
 	        box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
@@ -141,15 +151,12 @@ body {
 	        transition: all .3s linear;
 }
 
-	.reveal a:hover img {
-		background: rgba(255,255,255,0.2);
-		border-color: rgb(241, 78, 50);
+.reveal a:hover img:not(.noborder) {
 		
 		-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.55);
 		   -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.55);
 		        box-shadow: 0 0 20px rgba(0, 0, 0, 0.55);
-	}
-
+}
 
 /*********************************************
  * NAVIGATION CONTROLS
@@ -174,6 +181,29 @@ body {
   bottom: 10px;
   vertica-align: bottom;
 }
+
+/* slide counters top right */
+.reveal .counters {
+  height: 100px;
+  width: 100px;
+  position: fixed;
+  z-index: 40;
+  color: rgba(0,0,0,.3);
+  font-size: .4em;
+  line-height: .95em;
+  right: 5px;
+  bottom: 0px;
+  font-family: monospace;
+}
+.reveal .counters p {
+  position: absolute;
+  color: rgba(0,0,0,.5);
+  padding: 10px;
+}
+#cnt-hori     {top: 0;    left: 0; }
+#cnt-hori-all {top: 0;    right: 0; }
+#cnt-vert     {bottom: 0; left: 0; }
+#cnt-vert-all {bottom: 0; right: 0; }
 
 
 /*********************************************

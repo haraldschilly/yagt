@@ -122,6 +122,11 @@ var Reveal = (function(){
 		dom.progress = document.querySelector( '.reveal .progress' );
 		dom.progressbar = document.querySelector( '.reveal .progress span' );
 
+    dom.cnt_hori     = document.querySelector('#cnt-hori');
+    dom.cnt_hori_all = document.querySelector('#cnt-hori-all');
+    dom.cnt_vert     = document.querySelector('#cnt-vert');
+    dom.cnt_vert_all = document.querySelector('#cnt-vert-all');
+
 		if ( config.controls ) {
 			dom.controls = document.querySelector( '.reveal .controls' );
 			dom.controlsLeft = document.querySelector( '.reveal .controls .left' );
@@ -777,6 +782,14 @@ var Reveal = (function(){
 		if( config.progress && dom.progress ) {
 			dom.progressbar.style.width = ( indexh / ( document.querySelectorAll( HORIZONTAL_SLIDES_SELECTOR ).length - 1 ) ) * window.innerWidth + 'px';
 		}
+
+// update counter in top right corner
+  var horz_all = document.querySelectorAll( HORIZONTAL_SLIDES_SELECTOR ).length;
+  var vert_all = document.querySelectorAll( VERTICAL_SLIDES_SELECTOR ).length;
+  dom.cnt_hori_all.innerHTML = horz_all +1;
+  dom.cnt_hori.innerHTML     = indexh +1;
+  dom.cnt_vert_all.innerHTML = vert_all +1;
+  dom.cnt_vert.innerHTML     = indexv +1;
 
 		// Close the overview if it's active
 		if( overviewIsActive() ) {
