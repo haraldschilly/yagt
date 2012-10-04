@@ -21,7 +21,7 @@ var Reveal = (function(){
 			progress: true,
 
 			// Push each slide change to the browser history
-			history: false,
+			history: true,
 
 			// Enable keyboard shortcuts for navigation
 			keyboard: true,
@@ -40,10 +40,10 @@ var Reveal = (function(){
 			mouseWheel: true,
 
 			// Apply a 3D roll to links on hover
-			rollingLinks: true,
+			rollingLinks: false,
 
-			// Transition style (see /css/theme)
-			theme: 'default', 
+			// Theme style (see /css/theme)
+			theme: 'yagt', 
 
 			// Transition style
 			transition: 'default', // default/cube/page/concave/linear(2d),
@@ -235,8 +235,9 @@ var Reveal = (function(){
 			var themeFinder = /[^/]*?(?=\.css)/;
 			var themeName = themeURL.match(themeFinder)[0];
 			if(  config.theme !== themeName ) {
-				themeURL = themeURL.replace(themeFinder, config.theme);
+				/*themeURL = themeURL.replace(themeFinder, config.theme);
 				dom.theme.setAttribute( 'href', themeURL );
+        console.log(themeURL + " .. " + config.theme); */
 			}
 		}
 
