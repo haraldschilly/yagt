@@ -788,10 +788,15 @@ var Reveal = (function(){
 // update counter in top right corner
   var horz_all = document.querySelectorAll( HORIZONTAL_SLIDES_SELECTOR ).length;
   var vert_all = document.querySelectorAll( VERTICAL_SLIDES_SELECTOR ).length;
-  dom.cnt_hori_all.innerHTML = horz_all +1;
+  dom.cnt_hori_all.innerHTML = horz_all;
   dom.cnt_hori.innerHTML     = indexh +1;
-  dom.cnt_vert_all.innerHTML = vert_all +1;
-  dom.cnt_vert.innerHTML     = indexv +1;
+  if (vert_all == 0) {
+    dom.cnt_vert_all.innerHTML = "";
+    dom.cnt_vert.innerHTML     = "";
+  } else {
+    dom.cnt_vert_all.innerHTML = vert_all;
+    dom.cnt_vert.innerHTML     = indexv +1;
+  }
 
 // adjust title
  if (indexh ==0 && indexv ==0) {

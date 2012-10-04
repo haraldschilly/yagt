@@ -42,37 +42,18 @@
      <img class="noborder" src='res/git-logo.svg' width="300px" />
     </section>
 
-    <section>
-     <h2>Heads Up</h2>
-     <p>
-      reveal.js is a framework for easily creating beautiful presentations using HTML. You'll need a browser with 
-      support for CSS 3D transforms to see it in its full glory.
-     </p>
-     <p>
-      <i><small>- <a href="http://hakim.se">Hakim El Hattab</a> / <a href="http://twitter.com/hakimel">@hakimel</a></small></i>
-     </p>
-    </section>
+<section data-markdown>
+  <section data-markdown>
+    # Why?
 
-    <section>
-     <h2>Holistic Overview</h2>
-     <p>
-      Press <strong>ESC</strong> to enter the slide overview!
-     </p>
-    </section>
+    ...
+  </section>
+  <section data-markdown>
+    # Why?
 
-    <section>
-     <h2>rvl.io</h2>
-     <p>
-      If you don't like writing slides in HTML you can use the online editor <a href="http://www.rvl.io" target="_blank">rvl.io</a>.
-     </p>
-    </section>
-
-    <section>
-     <h2>Works in Mobile Safari</h2>
-     <p>
-      Try it out! You can swipe through the slides pinch your way to the overview.
-     </p>
-    </section>
+    ...
+  </section>
+</section>
 
     <section data-markdown>
      ## Markdown support
@@ -89,33 +70,6 @@
     </section>
 
     <section>
-     <h2>Transition Styles</h2>
-     <p>
-      You can select from different transitions, like: <br>
-      <a href="http://lab.hakim.se/reveal-js/?transition=cube">Cube</a> -
-      <a href="http://lab.hakim.se/reveal-js/?transition=page">Page</a> -
-      <a href="http://lab.hakim.se/reveal-js/?transition=concave">Concave</a> -
-      <a href="http://lab.hakim.se/reveal-js/?transition=linear">Linear</a>
-     </p>
-    </section>
-
-    <section>
-     <h2>Themes</h2>
-     <p>
-      Reveal.js comes with a few themes built in: <br>
-      <a href="http://lab.hakim.se/reveal-js/?theme=sky">Sky</a> -
-      <a href="http://lab.hakim.se/reveal-js/?theme=beige">Beige</a> -
-      <a href="http://lab.hakim.se/reveal-js/?theme=simple">Simple</a> -
-      <a href="http://lab.hakim.se/reveal-js/">Default</a>
-     </p>
-     <p>
-      <small>
-       * Theme demos are loaded after the presentation which leads to flicker. In production you should load your theme in the <code>&lt;head&gt;</code> using a <code>&lt;link&gt;</code>.
-      </small>
-     </p>
-    </section>
-
-    <section>
      <section data-state="alert">
       <h2>Global State</h2>
       <p>
@@ -123,24 +77,16 @@
        will be added as a class to the document element when the slide is open. This lets you
        apply broader style changes, like switching the background.
       </p>
-      <a href="#/7/1" class="image">
-       <img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-      </a>
      </section>
      <section data-state="blackout">
       <h2>"blackout"</h2>
-      <a href="#/7/2" class="image">
-       <img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-      </a>
      </section>
      <section data-state="soothe">
       <h2>"soothe"</h2>
-      <a href="#/7/0" class="image">
-       <img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="-webkit-transform: rotate(180deg);">
-      </a>
      </section>
     </section>
 
+<!--
     <section data-state="customevent">
      <h2>Custom Events</h2>
      <p>
@@ -151,7 +97,8 @@
 } );
      </code></pre>
     </section>
-
+-->
+<!--
     <section>
      <h2>Clever Quotes</h2>
      <p>
@@ -163,6 +110,7 @@
       reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.
      </blockquote>
     </section>
+-->
 
     <section>
      <h2>Pretty Code</h2>
@@ -210,24 +158,30 @@ function linkify( selector ) {
     </section>
     
     <section>
+    <table style="table-layout: fixed;">
+      <tr><td style="width: 50%">
      <h2>Links</h2>
      <ul>
-      <li><a href="http://github.com/haraldschilly/yagt">Source code on GitHub</a></li>
+      <li><a href="http://github.com/haraldschilly/yagt">Source of this</a></li>
       <li><a href="http://harald.schil.ly/">My Website</a></li>
      </ul>
-     <h2>Git Links</h2>
+    </td><td style="width: 50%">
+     <h2>Git Resources</h2>
      <ul>
       <li><a href="http://www.git-scm.com/">Git</a></li>
       <li><a href="http://git-scm.com/book">Git Book</a></li>
       <li><a href="http://gitready.com/">Git Ready</a></li>
-     </ul>
+    </ul>
+    </td></tr></table>
     </section>
 
     <section>
      <h1>Copyright</h1>
      <h3>(c) 2012 Harald Schilly, Vienna, Austria</h2>
+     <hr/>
      <h2>License:<a href="http://creativecommons.org/">CC BY-SA</a></h2>
      <p>Based on work by Hakim El Hattab / hakim.se</p>
+     <p>Detals: <code>git blame</code> ;-)</p>
     </section>
    </div>
 
