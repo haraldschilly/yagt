@@ -192,12 +192,12 @@ body {
   vertica-align: bottom;
 }
 
-/* slide counters top right */
+/* slide counters */
 .reveal .counters {
   height: 100px;
   width: 100px;
   position: fixed;
-  z-index: 40;
+  z-index: 20;
   color: rgba(0,0,0,.3);
   font-size: .4em;
   line-height: .95em;
