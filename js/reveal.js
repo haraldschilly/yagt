@@ -802,7 +802,9 @@ var Reveal = (function(){
  if (indexh ==0 && indexv ==0) {
    document.title = dom.title_orig;
  } else {
-   document.title = dom.title_orig + " - " + (indexh+1) + "/" + (indexv+1);
+   document.title = dom.title_orig + " - "
+                  + (indexh+1)
+                  + (indexv > 0 ? "/" + (indexv+1) : "");
  }
 
 		// Close the overview if it's active
