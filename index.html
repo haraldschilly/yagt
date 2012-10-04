@@ -39,7 +39,7 @@
      <h2>Yet Another <a href="http://git-scm.com/">Git</a> Talk</h2>
      <hr/>
      <h2>by <a href="http://harald.schil.ly">Harald Schilly</a></h2>
-     <img class="noborder" src='res/git-logo.svg' width="300px" />
+     <p><img class="noborder" src='res/git-logo.svg' width="300px" /></p>
     </section>
 
 <section data-markdown>
@@ -176,10 +176,11 @@ function linkify( selector ) {
     </section>
 
     <section>
-     <h1>Copyright</h1>
-     <h3>(c) 2012 Harald Schilly, Vienna, Austria</h2>
+     <h2>Copyright</h2>
+     <h2><b>&copy; 2012 <a href="http://harald.schil.ly/">Harald Schilly</a></b></h2>
      <hr/>
-     <h2>License:<a href="http://creativecommons.org/">CC BY-SA</a></h2>
+     <h2>Sources: <a href="http://github.com/haraldschilly/yagt">yagt@github</a></h2>
+     <h2>License: <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA</a></h2>
      <p>Based on work by Hakim El Hattab / hakim.se</p>
      <p>Detals: <code>git blame</code> ;-)</p>
     </section>
@@ -191,7 +192,7 @@ function linkify( selector ) {
    </aside>
 
    <!-- counter top right -->
-   <aside class="counters">
+   <aside id="counters">
    <p id="cnt-hori">-</p>
    <p id="cnt-hori-all">-</p>
    <p id="cnt-vert">-</p>
@@ -205,6 +206,9 @@ function linkify( selector ) {
     <a class="up" href="#">&#x25B2;</a>
     <a class="down" href="#">&#x25BC;</a>
    </aside>
+
+   <!-- time -->
+   <aside id="time"></aside>
 
    <!-- Presentation progress bar -->
    <div class="progress"><span></span></div>

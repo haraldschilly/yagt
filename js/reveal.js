@@ -129,6 +129,8 @@ var Reveal = (function(){
 
     dom.title_orig   = document.title;
 
+    dom.time = document.querySelector("#time");
+
 		if ( config.controls ) {
 			dom.controls = document.querySelector( '.reveal .controls' );
 			dom.controlsLeft = document.querySelector( '.reveal .controls .left' );
@@ -261,6 +263,14 @@ var Reveal = (function(){
 			// Add some 3D magic to our anchors
 			linkify();
 		}
+    
+    // timer for displaying time
+    setInterval(function() {
+      var ct = new Date();
+      var hours = ct.getHours();
+      var mins = ct.getMinutes();
+      dom.time.innerHTML = hours + ":" + mins;
+    }, 1000);
 	}
 
 	function addEventListeners() {

@@ -193,7 +193,7 @@ body {
 }
 
 /* slide counters */
-.reveal .counters {
+.reveal #counters {
   height: 100px;
   width: 100px;
   position: fixed;
@@ -205,7 +205,7 @@ body {
   bottom: 0px;
   font-family: monospace;
 }
-.reveal .counters p {
+.reveal #counters p {
   position: absolute;
   color: rgba(0,0,0,.5);
   padding: 10px;
@@ -215,6 +215,17 @@ body {
 #cnt-vert     {bottom: 0; left: 0; }
 #cnt-vert-all {bottom: 0; right: 0; }
 
+.reveal #time {
+  z-index:20;
+  text-align: center;
+  position: fixed;
+  width: 100px;
+  bottom: 48px;
+  right: 3px;
+  font-family: monospace;
+  font-size: .40em;
+  color: rgba(0,0,0,.4);
+}
 
 /*********************************************
  * PROGRESS BAR
