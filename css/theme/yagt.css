@@ -102,6 +102,11 @@ body {
 	text-transform: uppercase;
 }
 
+hr {
+ height: 0px;
+ color: black;
+ border: 1px solid black;
+}
 
 /*********************************************
  * LINKS
