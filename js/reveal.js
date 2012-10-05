@@ -4,6 +4,7 @@
  * MIT licensed
  * 
  * Copyright (C) 2011-2012 Hakim El Hattab, http://hakim.se
+ * Modifications by Harald Schilly http://harald.schil.ly
  */
 var Reveal = (function(){
 
@@ -269,7 +270,8 @@ var Reveal = (function(){
       var ct = new Date();
       var hours = ct.getHours();
       var mins = ct.getMinutes();
-      dom.time.innerHTML = hours + ":" + mins;
+      var zero = (mins < 10) ? "0" : "";
+      dom.time.innerHTML = hours + ":" + zero + mins;
     }, 1000);
 	}
 
