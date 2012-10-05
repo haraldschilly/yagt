@@ -37,7 +37,7 @@ src: local('Signika'), local('Signika-Regular'),url(res/signika/Signika-Regular.
 
 body {
 	font-family: 'Signika', sans-serif;
-	font-size: 36px;
+	font-size: 40px;
 	font-weight: 400;
 	letter-spacing: -0.05em;
 	color: black !important;
@@ -80,12 +80,18 @@ body {
 .reveal code:hover {
   background: rgba(255,255,255,1.0);
   font-color: black;
-  box-shadow: 5px 5px 6px rgba(0,0,0,0.5);
+  box-shadow: 4px 4px 8px rgba(0,0,0,0.8);
   border: 1px solid rgba(255,255,255,1.0);
   position: relative;
-  top: -3px;
-  left: -3px;
+  top: -2px;
+  left: -2px;
   z-index: 20;
+}
+
+.reveal pre {
+  margin: 20px auto;
+  font-size: .7em;
+  width: 100%;
 }
 
 /*********************************************
@@ -98,7 +104,7 @@ body {
 .reveal h4, 
 .reveal h5, 
 .reveal h6 {
-	margin: 0 0 20px 0;
+	margin: 0 0 .3em 0;
 	color: black;
 	/*font-family: 'News Cycle', sans-serif;*/
 	font-family: 'Signika', sans-serif;
@@ -106,12 +112,18 @@ body {
 	
 	text-transform: uppercase;
 }
+.reveal h2, .reveal h3 { margin-top: .2em; }
 
 hr {
  height: 0px;
  color: black;
  border: 1px solid black;
 }
+
+.reveal h1 { font-size: 3em; }
+.reveal h2 { font-size: 2em; }
+
+.reveal p, .reveal div { line-height: 1.3em; }
 
 /*********************************************
  * LINKS
@@ -196,7 +208,7 @@ hr {
   position: fixed;
   width: 120px;
   height: 60px;
-  z-index: 30;
+  z-index: 0;
   left: 20px;
   bottom: 10px;
   vertica-align: bottom;
@@ -222,16 +234,19 @@ hr {
 }
 #cnt-hori     {top: 0;    left: 0; }
 #cnt-hori-all {top: 0;    right: 0; }
-#cnt-vert     {bottom: 0; left: 0; }
-#cnt-vert-all {bottom: 0; right: 0; }
+#cnt-vert     {bottom: -5px; left: 0; }
+#cnt-vert-all {bottom: -5px; right: 0; }
 
 .reveal #time {
+  display: table-cell;
   z-index:20;
   text-align: center;
+  vertical-align: middle;
   position: fixed;
   width: 111px;
-  bottom: 49px;
-  right: 0px;
+  height: 60px;
+  bottom: 0;
+  right: 0;
   font-family: monospace;
   font-size: .38em;
   color: rgba(0,0,0,.5);

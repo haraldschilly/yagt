@@ -35,12 +35,39 @@
    <!-- Any section element inside of this container is displayed as a slide -->
    <div class="slides">
     <section>
-     <h1>YAGT</h1>
-     <h2>Yet Another <a href="http://git-scm.com/">Git</a> Talk</h2>
+     <h1 id="YAGT">YAGT</h1>
+     <h2 id="YAGT2">Yet Another Git Talk</h2>
      <hr/>
      <h2>by <a href="http://harald.schil.ly">Harald Schilly</a></h2>
      <p><img class="noborder" src='res/git-logo.svg' width="300px" /></p>
     </section>
+    <script>
+      var yagt  = document.querySelector("#YAGT");
+      var yagt2 = document.querySelector("#YAGT2");
+      var tt = "Yes, A Great Git Talk!".split("").reverse();
+      var phase2 = false;
+      yagt.onclick = function() {
+        yagt.onclick = undefined;
+        loop = setInterval(function() {
+          if (phase2) {
+            if(tt.length > 0) {
+              yagt2.innerHTML += tt.pop(0);
+            } else {
+              clearInterval(loop);
+              yagt.innerHTML = "<b>YAGGT!</b>";
+            }
+          } else { // phase 1
+            var t = yagt2.innerHTML;
+            if(t.length > 1) {
+              yagt2.innerHTML = t.substring(0, t.length-1);
+            } else {
+              yagt2.innerHTML = "&nbsp;";
+              phase2 = true;
+            }
+          }
+        }, 50);
+      }
+    </script>
 
 <section data-markdown>
   <section data-markdown>
@@ -55,6 +82,151 @@
   </section>
 </section>
 
+<section>
+  <section data-markdown>
+    ## First: Installation
+
+    download from [homepage](http://www.git-scm.com/)
+
+    Ubuntu: <code>sudo apt-get install git</code>
+
+    MacPorts: <code>sudo port install git-core +bash_completion</code>
+
+    ### Install Tools
+    <code>sudo apt-get install gitk git-cola</code>
+  </section>
+  <section>
+  <h2>Basics</h2>
+
+  Git is a command-line tool, called via <code>git</code>.
+
+  <h2 class="fragment">HELP</h2>
+<div class="fragment">
+  <h3>I NEED HHHEEEELP!!!</h3>
+  <code>git help [&lt;command&gt;]</code> 
+  <br/>
+  or
+  <br/>
+  <code> git [&lt;command&gt;] --help</code>
+  </div>
+  </section>
+  <section data-markdown>
+  ## Configuration
+
+  Git has a global <code>~/.gitconfig</code> and project specific local
+  <code>.git/config</code> configuration file.
+
+  Edit them either directly (leet!) or via
+
+  <code>git config [--global] ...</code>
+  </section>
+  <section data-markdown>
+    ## Config: Identity
+
+    All commits are associated with you.
+    That's necessary for [licensing copyrighted works](http://www.wipo.int/treaties/en/ip/berne/trtdocs_wo001.html).
+
+    <pre><code contenteditable>$ git config --global user.name "Gitti Gitian"
+    $ git config --global user.email "gitti@gitiscool.com"
+    # and check it
+    $ git config --global user.name
+    Gitti Gitian
+    </code></pre>
+
+    <code>--global</code> sets this for your entire account!
+    </section>
+
+    <section data-markdown>
+    ## Config: Aliases
+
+    Git allows to create custom commands. They can be shortcuts
+    or even small scripts.
+
+    Set them this way:
+
+    <pre><code contenteditable>$ git config --global alias.st status</code></pre>
+    </section>
+
+    <section data-markdown>
+    ## My Aliases
+    <pre><code contenteditable>$ git aliases
+    st = status
+    ci = commit
+    ll = log --oneline --graph --decorate --all -20
+    br = branch
+    co = checkout
+    df = diff
+    who = shortlog -s --
+    aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'
+    </code></pre>
+    </section>
+
+    <section data-markdown>
+    ## Config: Editor
+
+    Git sometimes pops up an text editor.
+
+    Choose your poison:
+
+    <pre><code>$ git config --global core.editor "vim"</code></pre>
+    </section>
+
+    <section data-markdown>
+    ## Config: Merge Tool
+
+    This is what Git gives you via <code>git mergetool</code>,
+    when it gives up resolving conflicts.
+
+    <pre><code>$ git config --global merge.tool meld</code></pre>
+
+    </section>
+    <section data-markdown>
+    ## Config: Color
+
+    Makes reading output much easier.
+
+    <pre><code>$ git config --global color.ui true</code></pre>
+
+    </section>
+  </section>
+  <!-- ################# -->
+<section>
+<section data-markdown>
+## Start a repository
+
+A repository in Git is decentralized.
+You do not need to know in advance,
+with whom you want to work together.
+
+<pre><code>$ mkdir myshinynewrepo
+$ cd !$
+$ git --bare
+</pre></code>
+
+</section>
+<section data-markdown data-state="soothe">
+## Clone a Repo
+
+... but if you know the project,
+it is easier to just <em>clone</em> it.
+
+<pre><code>$ git clone [git|http]://server/.../project.git</code></pre>
+
+Then, this <em>remote</em> server is already setup for 
+sending your commits to it (<em>pushing</em>).
+
+</section>
+<section data-markdown>
+
+</section>
+<section data-markdown>
+
+</section>
+<section data-markdown>
+
+</section>
+</section>
+<!--
     <section data-markdown>
      ## Markdown support
 
@@ -68,6 +240,7 @@
 &lt;/section&gt;
      </code></pre>
     </section>
+-->
 
     <section>
      <section data-state="alert">
