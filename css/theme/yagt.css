@@ -72,15 +72,20 @@ body {
 .reveal code {
   background: rgba(0,0,0,0.15);
   box-shadow: 0px 0px 6px rgba(0,0,0,0.15);
+  border: 1px solid transparent;
   padding-left: .2em;
   padding-right: .2em;
-  padding-bottom: .1em;
   border-radius: 3px;
 }
 .reveal code:hover {
-  background: rgba(0,0,0,0.1);
+  background: rgba(255,255,255,1.0);
   font-color: black;
-  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+  box-shadow: 5px 5px 6px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,1.0);
+  position: relative;
+  top: -3px;
+  left: -3px;
+  z-index: 20;
 }
 
 /*********************************************
@@ -224,12 +229,12 @@ hr {
   z-index:20;
   text-align: center;
   position: fixed;
-  width: 110px;
-  bottom: 48px;
+  width: 111px;
+  bottom: 49px;
   right: 0px;
   font-family: monospace;
-  font-size: .40em;
-  color: rgba(0,0,0,.4);
+  font-size: .38em;
+  color: rgba(0,0,0,.5);
 }
 
 /*********************************************
