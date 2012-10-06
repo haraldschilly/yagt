@@ -817,42 +817,41 @@ var Reveal = (function(){
    if (cur_slide.hasAttribute("bc")) {
      cur_title_txt = cur_slide.getAttribute("bc");
    } else {
-     var cur_title = cur_slide.children[0];
-     if (cur_title !== undefined && 
-         (cur_title.tagName.toLowerCase() == "h1" ||
-          cur_title.tagName.toLowerCase() == "h2" ||
-          cur_title.tagName.toLowerCase() == "h3")) {
-       var nv = cur_title.firstChild.nodeValue;
-       if (nv !== undefined && nv != null) {
-         cur_title_txt = cur_title.firstChild.nodeValue;
+     for (var idx = 0; idx < cur_slide.children.length; idx++) {
+       var cur_title = cur_slide.children[idx];
+       if (cur_title.tagName.toLowerCase() == "h1" ||
+           cur_title.tagName.toLowerCase() == "h2" ||
+           cur_title.tagName.toLowerCase() == "h3") {
+         var nv = cur_title.firstChild.nodeValue;
+         if (nv !== undefined && nv != null) {
+           cur_title_txt = cur_title.firstChild.nodeValue;
+           break;
+         }
        }
      }
    }
  }
+var cur_section = document.querySelector('.reveal .slides>section.present[bc]');
+var sec_txt = (cur_section != null) ? cur_section.getAttribute('bc') : "";
 // adjust page title
- if (indexh == 0 && indexv == 0) {
-   document.title = dom.title_orig;
- } else {
-   var slide_title = (cur_title_txt != null) ? (cur_title_txt + " - ") : "";
-   document.title = dom.title_orig + " - "
-                  + slide_title
-                  + (indexh+1)
-                  + (indexv > 0 ? "/" + (indexv+1) : "");
- }
+if (indexh == 0 && indexv == 0) {
+  document.title = dom.title_orig;
+} else {
+  var slide_title = (cur_title_txt != null) ? (cur_title_txt + " - ") : "";
+  document.title = dom.title_orig + " - "
+                 + ((sec_txt.length > 0) ? sec_txt : " ") + " - "
+                 + slide_title
+                 + (indexh+1)
+                 + (indexv > 0 ? "/" + (indexv+1) : "");
+}
 
 // change title in bar at the top
 function mklink(txt, url) {
   return "<a href='" + url + "'>" + txt + "</a>";
 }
-var cur_section = document.querySelector('.reveal .slides>section.present[bc]');
 dom.breadcrumb.innerHTML = mklink(dom.title_orig, "#/0");
-if (cur_section != null) {
-  var sec_txt = cur_section.getAttribute('bc');
-  if (sec_txt.length > 0) {
-    dom.breadcrumb.innerHTML += " &gt; " + mklink(sec_txt, "#/"+indexh);
-  }
-} else {
-  dom.breadcrumb.innerHTML += "[no bc]";
+if (sec_txt.length > 0) {
+  dom.breadcrumb.innerHTML += " &gt; " + mklink(sec_txt, "#/"+indexh);
 }
 if (cur_title_txt != null) {
   dom.breadcrumb.innerHTML += " &gt; "
