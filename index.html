@@ -78,14 +78,49 @@
 
 <section data-markdown bc="Introduction">
   <section data-markdown>
-    # Why?
+    # What's Git?
 
-    ...
+From the website:
+    <blockquote cite="http://git-scm.com/">
+Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency. </blockquote>
   </section>
   <section data-markdown>
-    # Why?
+    ## Purpose
 
-    ...
+<ul>
+  <li>Git tracks <em>text</em> files (i.e. source code, txt, svg, latex)
+      in a specific directory and all its sub-directories.</li>
+  <li class="fragment">Git records all the modifications in a history.</li>
+  <li class="fragment">Git allows to conveniently share modifications of a project
+   - between <b>any</b> member in a p2p fashion.</li>
+</ul>
+  </section>
+  <section data-markdown>
+## Distributed
+
+Git is also a *distributed* version control system.
+This means, you have all the history on your local machine.
+
+This allows you to make any kind of queries or modifications
+without connecting to a central server.
+
+It also fits much better with our mental model of *collaboration* in general.
+  </section>
+  <section data-markdown data-state="alert">
+## Git is not ...
+<ul>
+  <li>... a friend of binary files (i.e. jpeg, mp3, avi, doc, docx, odt, ...)</li>
+  <li class="fragment">... a way to just upload data to a (web-) server<br/>
+  &rarr; use <code>rsync -a --delete $SRC $DEST</code></li>
+  <li class="fragment">... a mere incremental backup <br/>
+      &rarr; use <code>rdiff-backup</code></li>
+</ul>
+<aside class="footnote">although, you can happily abuse it for all this ...</aside>
+  </section>
+
+  <section data-markdown>
+  </section>
+  <section data-markdown>
   </section>
 </section>
 
@@ -93,17 +128,15 @@
   <section data-markdown bc="Installation">
     ## First: Installation
 
-    download from [Git homepage](http://www.git-scm.com/)<sup>1</sup>
-
-    Ubuntu: <code>sudo apt-get install git</code>
-
-    MacPorts: <code>sudo port install git-core</code>
+* download from [Git homepage](http://www.git-scm.com/)<sup>1</sup>
+* Ubuntu: <code>sudo apt-get install git</code>
+* MacPorts: <code>sudo port install git-core</code>
 
     ### Install Tools
     <code>sudo apt-get install gitk git-cola</code>
 
-    <aside class="footnote-txt">
-    <sup>1</sup>http://www.git-scm.com/<br/>
+    <aside class="footnote">
+    <sup>1</sup> http://www.git-scm.com/<br/>
     </aside>
   </section>
   <section>
@@ -120,6 +153,13 @@
   <br/>
   <code> git [&lt;command&gt;] --help</code>
   </div>
+<aside class="footnote">GUIs: <code>gitk</code> and <code>git-gui</code>,
+<em><a href="http://git-scm.com/downloads/guis">Git Guis</a></em>,
+<a href="http://git-cola.github.com/">git-cola</a>,
+<a href="http://www.syntevo.com/smartgit/index.html">SmartGit</a>,
+<a href="http://code.google.com/p/tortoisegit/">TortoiseGit</a>,
+<a href="http://www.eclipse.org/egit/">Eclipse</a>, 
+... but this talk stays "pure".
   </section>
   <section data-markdown>
   ## Configuration
@@ -144,7 +184,7 @@
     Gitti Gitian
     </code></pre>
 
-    <aside class="footnote-txt">
+    <aside class="footnote">
       Remeber: <code>--global</code> sets this for your entire account!
     </aside>
     </section>
@@ -203,6 +243,127 @@
     </section>
   </section>
   <!-- ################# -->
+<section bc="Prerequisites">
+<section data-markdown>
+## Internal suff
+
+Git models the state and history via three very simplistic data structures.
+It sounds scary, but the best way to understand Git, is to learn about those basic ideas.
+
+<p class="fragment">Hey, we are hackers after all :-)</p>
+</section>
+<section data-markdown>
+## Hash function
+
+A hash function is a cryptographic primitve,
+which transforms some arbitrary data (file, byte-string)
+into a byte-string of *fixed length*!
+
+Git uses this technique extensively via
+[sha1](http://en.wikipedia.org/wiki/SHA-1).
+
+Such a hash is **unique** and usually the first few characters
+are enough to specify it. e.g. <code>d22f6ac</code>
+</section>
+<section data-markdown>
+## Hash Example
+
+A commit from the Git history:
+<pre>
+$ git log -1
+commit <b>d22f6ac868fd62dba328b555d93ec63b0fb00194</b>
+Author: Harald Schilly &lt;harald.schilly@gmail.com&gt;
+Date:   Sat Oct 6 21:07:48 2012 +0200
+
+    fragment: zoom and relative offset animation
+
+</pre>
+</section>
+<section data-markdown>
+## Linked List &amp; Trees
+
+All "objects" behind such hashes uniquely identified by the hash sum.
+
+References to other objects from "inside" such an object
+are used to build trees, linked lists (or to be precise, a DAG).
+</section>
+<section data-markdown>
+## Tree = Filesystem
+
+All files that are tracked by Git are basically organized in a tree.
+Each entry points to one specific "hashed" content of a file.
+
+(Besides that, the name of the file is recorded, too)
+</section>
+<section data-markdown>
+## Commit
+
+One specific snapshop of a tree with all files is called **commit**.
+
+Such a commit also records the author, the time/date, and usually
+references to one or two previous commits.
+</section>
+<section data-markdown>
+## DAG = History
+
+The collection of all those commits, referencing to the
+immediate ancestor(s), builds the history of the entire project.
+
+* The **root** is a commit with no ancestors<sup>1</sup>.
+* A **merge** is a commit with more than one ancestor.
+
+<aside class="footnote"><sup>1</sup> Yes, there could be more than one:
+<code>git checkout --orphan root2</code></aside>
+
+</section>
+<section data-markdown>
+## Branch
+
+It is hard to remember all those constantly changing hashsums.
+
+A *reference* to a specific commit is the start of a **branch**.
+This is a linear ordering of commits until the root.
+
+Also, when we *commit*, this reference automatically changes
+and points to the new revision!
+</section>
+<section data-markdown>
+## HEAD
+The **HEAD** is a special companion,
+which points to to the *current* branch
+or a specific revision.
+
+It is the base for current files in your actual working space.
+</section>
+<section data-markdown data-state="alert">
+## Detached HEAD
+
+Unfortunatle, your **HEAD** could fall off.
+In this case, it points directly to a revision and not a branch.
+
+Then, no branch reference automatically moves with the next commit!
+
+Git does not care about those revisions which aren't reachable from any branch (or tag).
+This means, a commit in a detached state will get lost!
+</section>
+<section data-markdown>
+## Selecting Revisions
+
+Quite often it is necessary to reference one or more revision.
+<ul>
+<li>first few characters of the hashsum</li>
+<li class="fragment">ancestors: <code>master~</code> or <code>master~2</code> ...</li>
+<li class="fragment">parent 2 of a merge: <code>8r7af^^</code></li>
+<li class="fragment">combo move: <code>master~3^^~</code></li>
+<li class="fragment">ranges: <code>master..topic1</code></li>
+<li class="fragment">branch differences: <code>master...topic2</code></li>
+</ul>
+
+<aside class="footnote">
+<a href="http://git-scm.com/book/en/Git-Tools-Revision-Selection">read more here</a>
+</aside>
+</section>
+</section>
 <section bc="Hands On">
 <section data-markdown>
 ## Start a repository
@@ -211,10 +372,10 @@ A repository in Git is decentralized.
 You do not need to know in advance,
 with whom you want to work together.
 
-<pre><code>$ mkdir myshinynewrepo
+<pre>$ mkdir myshinynewrepo
 $ cd !$
 $ git --bare
-</pre></code>
+</pre>
 
 </section>
 <section data-markdown data-state="soothe">
@@ -223,7 +384,7 @@ $ git --bare
 ... but if you know the project,
 it is easier to just <em>"clone"</em> it.
 
-<pre><code>$ git clone [git|http]://server/.../project.git</code></pre>
+<pre>$ git clone [git|http]://server/.../project.git</pre>
 
 Then, this <em>remote</em> server is already setup for 
 sending your commits to it (<em>"pushing"</em>).
@@ -245,7 +406,7 @@ $ git add -p fileX
 </code></pre>
 </section>
 <section data-markdown data-state="alert">
-##Don't edit a file after staging it!
+##Edits after staging are lost!
 
 Only the changes that were present at the time of
 staging will be commited - not the additional modifications.
@@ -261,6 +422,23 @@ Usually, it
 
 </section>
 <section data-markdown>
+## Diff
+
+It is also easy to see commit **diff**erences.
+
+<pre class="small">$ git diff HEAD~3..HEAD~2 index.html
+diff --git a/index.html b/index.html
+index 43063fb..06d9a2e 100644
+--- a/index.html
++++ b/index.html
+@@ -140,7 +144,9 @@
+     Gitti Gitian
+-    &lt;code&gt;--global&lt;/code&gt; sets this for your entire account!
++    &lt;aside class="footnote"&gt;
++      Remeber: &lt;code&gt;--global&lt;/code&gt; sets this for your entire account!
++    &lt;/aside&gt;
+     &lt;/section&gt;
+</pre>
 
 </section>
 <section data-markdown data-state="soothe">
@@ -444,7 +622,7 @@ function linkify( selector ) {
    <!-- breadcrumb at the top -->
    <aside id="breadcrumb">BREAD &gt; CRUMB</aside>
 
-   <!-- footnote in bottom middle. enter text via <aside class="footnote-txt">...</aside>
+   <!-- footnote in bottom middle. enter text via <aside class="footnote">...</aside>
         inside <section> -->
    <aside id="footnote"></aside>
 

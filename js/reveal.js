@@ -859,7 +859,7 @@ if (cur_title_txt != null) {
 }
 
 // footnote
-var footnote_txt = document.querySelector('.reveal .slides>section.present>section.present>aside.footnote-txt');
+var footnote_txt = document.querySelector('.reveal .slides>section.present>section.present>aside.footnote');
 dom.footnote.innerHTML = (footnote_txt != null) ? footnote_txt.innerHTML : "";
 
 		// Close the overview if it's active
