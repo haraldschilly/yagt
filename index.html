@@ -90,7 +90,7 @@
 
     Ubuntu: <code>sudo apt-get install git</code>
 
-    MacPorts: <code>sudo port install git-core +bash_completion</code>
+    MacPorts: <code>sudo port install git-core</code>
 
     ### Install Tools
     <code>sudo apt-get install gitk git-cola</code>
@@ -208,22 +208,67 @@ $ git --bare
 ## Clone a Repo
 
 ... but if you know the project,
-it is easier to just <em>clone</em> it.
+it is easier to just <em>"clone"</em> it.
 
 <pre><code>$ git clone [git|http]://server/.../project.git</code></pre>
 
 Then, this <em>remote</em> server is already setup for 
-sending your commits to it (<em>pushing</em>).
+sending your commits to it (<em>"pushing"</em>).
+
+</section>
+<section data-markdown>
+## Staging
+
+Git has a so called <em>"staging area"</em>.
+This is a selection of modified files,
+or parts of files, that you wish to be part of the next
+<em>"[commit](#/3/3)"</em>.
+
+<pre><code>$ git add fileA fileB ...
+# or just all, which are already tracked
+$ git add -A
+# or just a part
+$ git add -p fileX
+</code></pre>
+</section>
+<section data-markdown data-state="alert">
+##Don't edit a file after staging it!
+
+Only the changes that were present at the time of
+staging will be commited - not the additional modifications.
+
+Reason: Staging means, that the modifications are copied into
+something called *"index"*; it has nothing to do with the actual files.
+</section>
+<section data-markdown>
+## Committing
+
+Creating a new commit is probably the most often used feature.
+Usually, it 
 
 </section>
 <section data-markdown>
 
 </section>
-<section data-markdown>
+<section data-markdown data-state="soothe">
+## Too many commands?
 
+It is possible to combine **add -A** and **commit**,
+even including the commit message:
+
+<pre><code>$ git commit -am "commit message"</code></pre>
 </section>
 <section data-markdown>
+## Summary /1
 
+<img src="res/basic-usage.svg" />
+</section>
+<section data-markdown>
+### Summary /2
+
+It is possible to *skip* the staging area. *Both are modified!*
+
+<img src="res/basic-usage-2.svg" />
 </section>
 </section>
 <!--
