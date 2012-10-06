@@ -87,8 +87,9 @@ body {
 
 .reveal .slides section .fragment {
 	opacity: 0;
+  font-size: 20%;
   position: relative;
-  /*bottom: -1000px;*/
+  bottom: -4em;
 
 	-webkit-transition: all .4s ease;
 	   -moz-transition: all .4s ease;
@@ -99,6 +100,7 @@ body {
 	.reveal .slides section .fragment.visible {
 		opacity: 1;
     bottom: 0;
+    font-size: 100%;
 	}
 
 
