@@ -129,9 +129,8 @@ var Reveal = (function(){
     dom.cnt_vert_all = document.querySelector('#cnt-vert-all');
 
     dom.title_orig   = document.title;
-
     dom.breadcrumb   = document.querySelector('#breadcrumb');
-
+    dom.footnote     = document.querySelector("#footnote");
     dom.time = document.querySelector("#time");
 
 		if ( config.controls ) {
@@ -859,6 +858,10 @@ if (cur_title_txt != null) {
   dom.breadcrumb.innerHTML += " &gt; "
     + mklink(cur_title_txt, "#/" + indexh + "/" + indexv);
 }
+
+// footnote
+var footnote_txt = document.querySelector('.reveal .slides>section.present>section.present>aside.footnote-txt');
+dom.footnote.innerHTML = (footnote_txt != null) ? footnote_txt.innerHTML : "";
 
 		// Close the overview if it's active
 		if( overviewIsActive() ) {
