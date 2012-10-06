@@ -119,6 +119,10 @@ body {
   font-size: 70%;
   line-height: 110%;
 }
+
+.reveal li {
+  margin: .3em auto;
+}
 /*********************************************
  * HEADERS
  *********************************************/
@@ -137,7 +141,7 @@ body {
 	
 	text-transform: uppercase;
 }
-.reveal h2, .reveal h3 { margin-top: .2em; }
+.reveal h2, .reveal h3 { margin-top: .0em; }
 
 hr {
  height: 0px;
@@ -145,8 +149,9 @@ hr {
  border: 1px solid black;
 }
 
-.reveal h1 { font-size: 3em; }
-.reveal h2 { font-size: 2em; }
+.reveal h1 { font-size: 2.4em; }
+.reveal h2 { font-size: 1.8em; }
+.reveal h3 { font-size: 1.5em; }
 
 .reveal p, .reveal div { line-height: 1.3em; }
 

@@ -42,11 +42,15 @@
    <!-- Any section element inside of this container is displayed as a slide -->
    <div class="slides">
     <section bc="">
+     <section>
      <h1 id="YAGT">YAGT</h1>
      <h2 id="YAGT2">Yet Another Git Talk</h2>
      <hr/>
      <h2>by <a href="http://harald.schil.ly">Harald Schilly</a></h2>
      <p><img class="noborder" src='res/git-logo.svg' width="300px" /></p>
+
+     <aside class="footnote"><a href="http://dev.harald.schil.ly/yagt/">http://dev.harald.schil.ly/yagt/</a></aside>
+    </section>
     </section>
     <script>
       var yagt  = document.querySelector("#YAGT");
@@ -82,7 +86,7 @@
 
 From the website:
     <blockquote cite="http://git-scm.com/">
-Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency. </blockquote>
+Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.</blockquote>
   </section>
   <section data-markdown>
     ## Purpose
@@ -142,7 +146,7 @@ It also fits much better with our mental model of *collaboration* in general.
   <section>
   <h2>Basics</h2>
 
-  Git is a command-line tool, called via <code>git</code>.
+  Git is a <b>command-line tool</b>, called via <code>git</code>.
 
   <h2 class="fragment">HELP</h2>
 <div class="fragment">
@@ -247,10 +251,16 @@ It also fits much better with our mental model of *collaboration* in general.
 <section data-markdown>
 ## Internal suff
 
-Git models the state and history via three very simplistic data structures.
+Git models the state and history via three very simplistic data structures:
+blob, tree and commit.
+
 It sounds scary, but the best way to understand Git, is to learn about those basic ideas.
 
 <p class="fragment">Hey, we are hackers after all :-)</p>
+
+<aside class="footnote">
+<a href="http://git-scm.com/book/en/Git-Internals-Git-Objects">Git Book: Internal Objects</a>
+</aside>
 </section>
 <section data-markdown>
 ## Hash function
@@ -478,23 +488,6 @@ It is possible to *skip* the staging area. *Both are modified!*
     </section>
 -->
 
-    <section>
-     <section data-state="alert">
-      <h2>Global State</h2>
-      <p>
-       Set <code>data-state="something"</code> on a slide and <code>"something"</code>
-       will be added as a class to the document element when the slide is open. This lets you
-       apply broader style changes, like switching the background.
-      </p>
-     </section>
-     <section data-state="blackout">
-      <h2>"blackout"</h2>
-     </section>
-     <section data-state="soothe">
-      <h2>"soothe"</h2>
-     </section>
-    </section>
-
 <!--
     <section data-state="customevent">
      <h2>Custom Events</h2>
@@ -507,91 +500,35 @@ It is possible to *skip* the staging area. *Both are modified!*
      </code></pre>
     </section>
 -->
-<!--
-    <section>
-     <h2>Clever Quotes</h2>
-     <p>
-      These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-      The nice thing about standards is that there are so many to choose from</q> and block:
-     </p>
-     <blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-      For years there has been a theory that millions of monkeys typing at random on millions of typewriters would 
-      reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.
-     </blockquote>
-    </section>
--->
-
-    <section>
-     <h2>Pretty Code</h2>
-     <pre><code contenteditable>
-function linkify( selector ) {
-  if( supports3DTransforms ) {
-
-    var nodes = document.querySelectorAll( selector );
-
-    for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
-      var node = nodes[i];
-
-      if( !node.className ) ) {
-        node.className += ' roll';
-      }
-    };
-  }
-}
-     </code></pre>
-     <p>Courtesy of <a href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.</p>
-    </section>
-
-    <section>
-     <h2>Intergalactic Interconnections</h2>
-     <p>
-      You can link between slides internally,
-      <a href="#/2/3">like this</a>.
-     </p>
-    </section>
-
-    <section>
-     <h2>Fragmented Views</h2>
-     <p>Hit the next arrow...</p>
-     <p class="fragment">... to step through ...</p>
-      <p class="fragment"><code>any type</code></p>
-      <p class="fragment"><em>of view</em></p>
-      <p class="fragment"><strong>fragments</strong></p>
-    </section>
-    
-    <section>
-     <h2>Spectacular image!</h2>
-     <a class="image" href="http://hakim.se/experiments/html5/breakdom/" target="_blank">
-      <img width="320" height="412" src="https://s3.amazonaws.com/hakim-static/reveal-js/breakdom.png" alt="BreakDOM game screenshot">
-     </a>
-    </section>
-    
-    <section>
-    <table style="table-layout: fixed;">
-      <tr><td style="width: 50%">
-     <h2>Links</h2>
-     <ul>
-      <li><a href="http://github.com/haraldschilly/yagt">Source of this</a></li>
-      <li><a href="http://harald.schil.ly/">My Website</a></li>
+    <section bc="Final Words">
+     <section bc="Links">
+     <table style="table-layout: fixed;">
+       <tr><td style="width: 50%">
+      <h2>Links</h2>
+      <ul>
+       <li><a href="http://github.com/haraldschilly/yagt">Source of this</a></li>
+       <li><a href="http://harald.schil.ly/">My Website</a></li>
+      </ul>
+     </td><td style="width: 50%">
+      <h2>Resources</h2>
+      <ul>
+       <li><a href="http://www.git-scm.com/">Git</a></li>
+       <li><a href="http://git-scm.com/book">Git Book</a></li>
+       <li><a href="http://gitready.com/">Git Ready</a></li>
      </ul>
-    </td><td style="width: 50%">
-     <h2>Resources</h2>
-     <ul>
-      <li><a href="http://www.git-scm.com/">Git</a></li>
-      <li><a href="http://git-scm.com/book">Git Book</a></li>
-      <li><a href="http://gitready.com/">Git Ready</a></li>
-    </ul>
-    </td></tr></table>
-    </section>
+     </td></tr></table>
+     </section>
 
-    <section>
-     <h2>Copyright</h2>
+     <section>
+     <h3>Copyright</h3>
      <h2><b>&copy; 2012 <a href="http://harald.schil.ly/">Harald Schilly</a></b></h2>
      <hr/>
-     <h2>Sources: <a href="http://github.com/haraldschilly/yagt">yagt@github</a></h2>
+     <h2>Fork Me: <a href="http://github.com/haraldschilly/yagt">yagt@github</a></h2>
      <h2>License: <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA</a></h2>
-     <p>Based on work by Hakim El Hattab / hakim.se</p>
-     <p>Details: <code>git blame</code> ;-)</p>
+     <p>Based on work by <a href="http://hakim.se">Hakim El Hattab</a> 
+     and <a href="http://marklodato.github.com/visual-git-guide/">Mark Lodato</a>. 
+     Details: <code>git blame|log</code> ;-)</p>
+     </section>
     </section>
    </div>
 
