@@ -897,13 +897,13 @@ body {
 	        transition: background 800ms ease;
 }
 .alert .state-background {
-	background: rgba( 200, 50, 30, 0.6 );
+	background: rgba( 200, 50, 30, 0.4 );
 }
 .soothe .state-background {
 	background: rgba( 50, 200, 90, 0.4 );
 }
 .blackout .state-background {
-	background: rgba( 0, 0, 0, 0.6 );
+	background: rgba( 0, 0, 0, 0.5 );
 }
 
 
