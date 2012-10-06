@@ -255,6 +255,21 @@ hr {
   color: rgba(0,0,0,.5);
 }
 
+.reveal #breadcrumb {
+  position: fixed;
+  top: .3em;
+  left: .3em;
+  z-index: 20;
+  font-size: .4em;
+  color: rgba(0,0,0,.3);
+  letter-spacing: 0;
+}
+.reveal #breadcrumb a {
+  text-decoration: none;
+  color: rgba(0,0,0,.3);
+  font-weight: normal;
+}
+
 /*********************************************
  * PROGRESS BAR
  *********************************************/

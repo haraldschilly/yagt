@@ -130,6 +130,8 @@ var Reveal = (function(){
 
     dom.title_orig   = document.title;
 
+    dom.breadcrumb   = document.querySelector('#breadcrumb');
+
     dom.time = document.querySelector("#time");
 
 		if ( config.controls ) {
@@ -811,19 +813,24 @@ var Reveal = (function(){
   }
 
  var cur_slide = document.querySelector('.reveal .slides>section.present>section.present');
- var cur_title = cur_slide.children[0];
  var cur_title_txt = null;
- if (cur_title !== undefined && 
-     (cur_title.tagName.toLowerCase() == "h1" ||
-      cur_title.tagName.toLowerCase() == "h2" ||
-      cur_title.tagName.toLowerCase() == "h3")) {
-   var nv = cur_title.firstChild.nodeValue;
-   if (nv !== undefined && nv != null) {
-     cur_title_txt = cur_title.firstChild.nodeValue;
+ if (cur_slide != null) {
+   if (cur_slide.hasAttribute("bc")) {
+     cur_title_txt = cur_slide.getAttribute("bc");
+   } else {
+     var cur_title = cur_slide.children[0];
+     if (cur_title !== undefined && 
+         (cur_title.tagName.toLowerCase() == "h1" ||
+          cur_title.tagName.toLowerCase() == "h2" ||
+          cur_title.tagName.toLowerCase() == "h3")) {
+       var nv = cur_title.firstChild.nodeValue;
+       if (nv !== undefined && nv != null) {
+         cur_title_txt = cur_title.firstChild.nodeValue;
+       }
+     }
    }
  }
-
-// adjust title
+// adjust page title
  if (indexh == 0 && indexv == 0) {
    document.title = dom.title_orig;
  } else {
@@ -833,6 +840,25 @@ var Reveal = (function(){
                   + (indexh+1)
                   + (indexv > 0 ? "/" + (indexv+1) : "");
  }
+
+// change title in bar at the top
+function mklink(txt, url) {
+  return "<a href='" + url + "'>" + txt + "</a>";
+}
+var cur_section = document.querySelector('.reveal .slides>section.present[bc]');
+dom.breadcrumb.innerHTML = mklink(dom.title_orig, "#/0");
+if (cur_section != null) {
+  var sec_txt = cur_section.getAttribute('bc');
+  if (sec_txt.length > 0) {
+    dom.breadcrumb.innerHTML += " &gt; " + mklink(sec_txt, "#/"+indexh);
+  }
+} else {
+  dom.breadcrumb.innerHTML += "[no bc]";
+}
+if (cur_title_txt != null) {
+  dom.breadcrumb.innerHTML += " &gt; "
+    + mklink(cur_title_txt, "#/" + indexh + "/" + indexv);
+}
 
 		// Close the overview if it's active
 		if( overviewIsActive() ) {
