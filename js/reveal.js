@@ -342,6 +342,7 @@ var Reveal = (function(){
 	 */
 	function preventAndForward( delegate ) {
 		return function( event ) {
+      this.blur();
 			event.preventDefault();
 			delegate.call();
 		};
