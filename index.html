@@ -89,17 +89,49 @@ From the website:
 Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.</blockquote>
   </section>
   <section data-markdown>
-    ## Purpose
+## Purpose
 
 <ul>
-  <li>Git tracks <em>text</em> files (i.e. source code, txt, svg, latex)
-      in a specific directory and all its sub-directories.</li>
-  <li class="fragment">Git records all the modifications in a history.</li>
+  <li>Git tracks line oriented <em>text</em> files 
+      (i.e. Source Code, TXT, HTML, SVG, LaTeX, ...)
+      in a specific directory and all its sub-directories.
+      (This is called "<b>repository</b>".)
+  </li>
+  <li class="fragment">Git records modifications in a history.</li>
   <li class="fragment">Git allows to conveniently share modifications of a project
-   - between <b>any</b> member in a p2p fashion.</li>
+  between <b>any</b> member in a p2p fashion.</li>
 </ul>
-  </section>
-  <section data-markdown>
+</section>
+<section data-markdown>
+## History
+Git was created by [Linus Torvalds](http://en.wikipedia.org/wiki/Linus_Torvalds)
+for the development of Linux in 2005.
+
+There was no tool available that would meet all his needs,
+and would fit into the existing kernel development model.
+
+His major accomplishment was to break down the complexity of
+a full fledged RCS/SCM into 3 very basic building blocks.
+All Git operations manipulate and operate only on those!
+
+<aside class="footnote">
+<a href="http://en.wikipedia.org/wiki/Git_%28software%29">Git@Wikipedia</a>
+</aside>
+</section>
+<section data-markdown>
+## Design Goals
+
+* Speed
+* Simple design
+* Strong support for non-linear development (thousands of parallel branches)
+* Fully distributed
+* Able to handle large projects like the Linux kernel efficiently (speed and data size)
+
+<aside class="footnote">
+<a href="http://git-scm.com/book/en/Getting-Started-A-Short-History-of-Git">Short Git History</a>
+</aside>
+</section>
+<section data-markdown>
 ## Distributed
 
 Git is also a *distributed* version control system.
@@ -109,28 +141,23 @@ This allows you to make any kind of queries or modifications
 without connecting to a central server.
 
 It also fits much better with our mental model of *collaboration* in general.
-  </section>
-  <section data-markdown data-state="alert">
+</section>
+<section data-markdown data-state="alert">
 ## Git is not ...
 <ul>
-  <li>... a friend of binary files (i.e. jpeg, mp3, avi, doc, docx, odt, ...)</li>
+  <li>... a friend of binary files (i.e. jpeg, mp3, avi, doc, docx, odt, zip (unzip first), png, ...)</li>
   <li class="fragment">... a way to just upload data to a (web-) server<br/>
-  &rarr; use <code>rsync -a --delete $SRC $DEST</code></li>
+  &rarr; use <code>rsync -av --delete $SRC $DEST</code></li>
   <li class="fragment">... a mere incremental backup <br/>
       &rarr; use <code>rdiff-backup</code></li>
 </ul>
-<aside class="footnote">although, you can happily abuse it for all this ...</aside>
-  </section>
-
-  <section data-markdown>
-  </section>
-  <section data-markdown>
-  </section>
+<aside class="footnote">although, you can happily abuse Git for all of this ...</aside>
+</section>
 </section>
 
 <section bc="Prerequisites">
 <section data-markdown>
-## Internal stuff
+## Internal Stuff
 
 Git models the state and history via three very simplistic data structures:
 blob, tree and commit.
@@ -150,11 +177,16 @@ A hash function is a cryptographic primitive,
 which transforms some arbitrary data (file, byte-string)
 into a byte-string of *fixed length*!
 
+Such a hash is **unique** and **deterministic**.<sup>1</sup>
+
 Git uses this technique extensively via
 [sha1](http://en.wikipedia.org/wiki/SHA-1).
-
-Such a hash is **unique** and usually the first few characters
+Usually, the first few characters
 are enough to specify it. e.g. <code>d22f6ac</code>
+
+<aside class="footnote"><sup>1</sup> Only due to this, two
+developers can agree on a common state witout any centralized tracking.
+</aside>
 </section>
 <section data-markdown>
 ## Hash Example
@@ -173,18 +205,26 @@ Date:   Sat Oct 6 21:07:48 2012 +0200
 <section data-markdown>
 ## Linked List &amp; Trees
 
-All "objects" behind such hashes uniquely identified by the hash sum.
+All "objects" behind such hashes are uniquely identified by the hashsum<sup>1</sup>.
 
-References to other objects from "inside" such an object
-are used to build trees, linked lists (or to be precise, a DAG).
+References to other objects from "*inside*" such an object
+are used to build trees (or to be precise, a DAG).
+
+This data-structure will be the "*history*" of the project.
+
+<aside class="footnote">
+<sup>1</sup> for files, this is a <em>content-addressable</em> file-system,
+not the usual one with "filenames".
+</aside>
 </section>
 <section data-markdown>
-## Tree = File system
+## Tree = File-System
 
-All files that are tracked by Git are basically organized in a tree.
-Each entry points to one specific "hashed" content of a file.
+All files tracked by Git are hierarchically organized by "*trees*".
+Each entry points to one specific "hashed" content of a file
+or another tree (a sub-directory).
 
-(Besides that, the name of the file is recorded, too)
+Besides that, the name of the file is recorded, too.
 </section>
 <section data-markdown>
 ## Commit
@@ -197,10 +237,10 @@ Git repository. Learning Git means mastering how to create
 commits and how to juggle them around.
 
 Such a commit also records the author, the time/date, and usually
-references to one or two previous commits.
+references one or more previous commits.
 </section>
 <section data-markdown>
-## Working Dir and Staging
+## Working Dir &amp; Staging
 
 To create a commit, you have to go "*shopping*".
 
@@ -225,10 +265,10 @@ immediate ancestor(s), builds the history of the entire project.
 <code>git checkout --orphan root2</code></aside>
 
 </section>
-<section data-markdown bc="DAG">
+<section data-markdown bc="History Graph">
 <img style="width: 90%;" src="res/dag.svg" />
 
-DAG: [directed acyclic graph](http://en.wikipedia.org/wiki/Directed_acyclic_graph)
+History is a [DAG](http://en.wikipedia.org/wiki/Directed_acyclic_graph)
 </section>
 <section data-markdown>
 ## Branch
@@ -239,12 +279,12 @@ A *reference* to a specific commit is the start of a **branch**.
 This is a linear ordering of commits until the root.
 
 Also, when we *commit*, this reference automatically changes
-and points to the new revision!
+and points to the new commit!
 </section>
-<section data-markdown bc="DAG w/ names">
+<section data-markdown bc="History Graph (annotated)">
 <img style="width: 95%;" src="res/dag-named.svg" />
 
-Same DAG with names.
+Same history with names.
 </section>
 <section data-markdown>
 ## HEAD
@@ -252,7 +292,11 @@ The **HEAD** is a special companion,
 which points to to the *current* branch
 or a specific revision.
 
-It is the base for current files in your actual working space.
+It is the base for all files in your current working space.
+
+<pre>$ <b>cat .git/HEAD</b>
+ref: refs/heads/master
+</pre>
 </section>
 <section data-markdown>
 ## Committing Overview
@@ -262,12 +306,15 @@ It is the base for current files in your actual working space.
 ## Detached HEAD
 
 Unfortunately, your **HEAD** could fall off.
-In this case, it points directly to a revision and not a branch.
 
-Then, no branch reference automatically moves with the next commit!
+In this case, it points directly to a revision and not a branch.
+Then, the branch reference doesn't automatically moves with the next commit!
 
 Git does not care about those revisions which aren't reachable from any branch (or tag).
 This means, a commit in a detached state will get lost!
+
+<pre class="small">$ <b>cat .git/HEAD</b>
+b1b7e86e011aebad8df6d9af33214abedb113983</pre>
 </section>
 <section data-markdown data-state="alert">
 ## Commit w/ Detached Head
@@ -276,7 +323,7 @@ This means, a commit in a detached state will get lost!
 <section data-markdown data-state="alert">
 ## Rewriting History
 
-The feature of Git to discard all commits which are not reachable,
+The feature<sup>1</sup> of Git to discard all commits which are not reachable,
 is used in various ways. This is often called "**rewriting history**".
 
 <ul class="fragment">
@@ -286,7 +333,8 @@ or to extract parts of a larger history.</li>
 </ul>
 
 <aside class="footnote">
-<sup>1</sup>But don't worry, Git takes great care to not loose anything
+<sup>1</sup>Yes, feature not bug. <b>This is the key to repair mistakes!</b><br/>
+<sup>2</sup>But don't worry, Git takes great care to not loose anything
 unless you <code>-f</code> "*force*" it.<br/>
 There is also a safety net called "*reflog*".
 </section>
@@ -788,10 +836,10 @@ You can do <code>git remote add [name] [URL]</code> to add a remote server.
 ## List Remotes
 
 <pre>$ <b>git remote -v show</b>
-origin  git@github.com:haraldschilly/panobbgo.git (fetch)
-origin  git@github.com:haraldschilly/panobbgo.git (push)
-uni ssh://schilly@login/.../panobbgo (fetch)
-uni ssh://schilly@login/.../panobbgo (push)
+origin  git@github.com:.../...git (fetch)
+origin  git@github.com:.../...git (push)
+uni ssh://name@login/.../repo (fetch)
+uni ssh://name@login/.../repo (push)
 </pre>
 </section>
 
@@ -811,6 +859,18 @@ at the correct positions!
 </section> <!-- end collab -->
 
 <section bc="Advanced">
+<section data-markdown>
+## Reflog
+
+As a safeguard, Git stores the entire journey of the HEAD.
+This "*reflog*" prevents Git from forgetting
+unreachable commits for at least a few weeks.
+
+<code>git reflog</code> lists you the relevant hashes.
+Use <code>reset --hard</code> to reset everything back to how it was.
+
+Note: This reflog is only local to your repository!
+</section>
 <section data-markdown>
 ## Tree
 
@@ -878,6 +938,22 @@ the history "in a different way" by consecutive cherry picks.
 
 <section data-markdown bc="rebase example">
 <img style="width: 90%" src="res/rebase.svg" />
+</section>
+
+<section data-markdown>
+## Squashing
+
+This is the art of combining several consecutive commits into just one.
+This can be done via <code>git rebase -i HEAD~[n]</code> or
+
+<pre>git checkout $1
+git reset --soft $2
+git commit --amend -m "squashed history"
+TARGET=`git rev-list HEAD --max-count=1`
+git checkout master
+git rebase --onto $TARGET $2
+</pre>
+[credits for this madness](http://stackoverflow.com/questions/598672/git-how-to-squash-the-first-two-commits)
 </section>
 
 </section> <!-- end advanced -->
