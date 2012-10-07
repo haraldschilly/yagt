@@ -130,7 +130,7 @@ It also fits much better with our mental model of *collaboration* in general.
 
 <section bc="Prerequisites">
 <section data-markdown>
-## Internal suff
+## Internal stuff
 
 Git models the state and history via three very simplistic data structures:
 blob, tree and commit.
@@ -146,7 +146,7 @@ It sounds scary, but the best way to understand Git, is to learn about those bas
 <section data-markdown>
 ## Hash function
 
-A hash function is a cryptographic primitve,
+A hash function is a cryptographic primitive,
 which transforms some arbitrary data (file, byte-string)
 into a byte-string of *fixed length*!
 
@@ -179,7 +179,7 @@ References to other objects from "inside" such an object
 are used to build trees, linked lists (or to be precise, a DAG).
 </section>
 <section data-markdown>
-## Tree = Filesystem
+## Tree = File system
 
 All files that are tracked by Git are basically organized in a tree.
 Each entry points to one specific "hashed" content of a file.
@@ -261,7 +261,7 @@ It is the base for current files in your actual working space.
 <section data-markdown data-state="alert">
 ## Detached HEAD
 
-Unfortunatle, your **HEAD** could fall off.
+Unfortunately, your **HEAD** could fall off.
 In this case, it points directly to a revision and not a branch.
 
 Then, no branch reference automatically moves with the next commit!
@@ -369,7 +369,7 @@ Gitti Gitian
 </code></pre>
 
 <aside class="footnote">
-  Remeber: <code>--global</code> sets this for your entire account!
+  Remember: <code>--global</code> sets this for your entire account!
 </aside>
 </section>
 
@@ -482,6 +482,13 @@ sending your commits to it (<em>"pushing"</em>).
 
 </section>
 <section data-markdown>
+<h2>Status</h2>
+To see all modified and untracked files (which are not ignored),
+Git provides the <code>status</code> command.
+
+Its output also lists useful commands, which will be explained in the next slides.
+</section>
+<section data-markdown>
 <h2>Staging</h2>
 
 Git has a so called <em>"staging area"</em>.
@@ -502,35 +509,43 @@ $ git rm fileY
 ##Edits after staging are ignored!
 
 Only the changes that were present at the time of
-staging will be commited - not the additional modifications.
+staging will be committed - not the additional modifications.
 
 Reason: Staging means, that the modifications are copied into
 something called *"index"*; it has nothing to do with the actual files.
+
+To see what's going on: <code>git status</code>.
 </section>
 <section data-markdown>
 ## Committing
 
-Creating a new commit is probably the most often used feature.
-Usually, it 
+Creating a new commit is probably the most famous feature.
 
+In its basic use case, the modifications from the *index*
+are taken and stored as a new commit in the history.
+
+<code>git commit</code>
+
+Additionally, your author information, the time and a custom
+"*commit message*" are stored.
 </section>
 <section data-markdown bc="Diff">
 It is also easy to see commit **diff**erences.
 
-<pre class="small">$ git diff HEAD~3..HEAD~2 index.html
+<pre class="small">$ <b>git diff HEAD~3..HEAD~2 index.html</b>
 diff --git a/index.html b/index.html
 index 43063fb..06d9a2e 100644
 --- a/index.html
 +++ b/index.html
 @@ -140,7 +144,9 @@
      Gitti Gitian
--    &lt;code&gt;--global&lt;/code&gt; sets this for your entire account!
-+    &lt;aside class="footnote"&gt;
-+      Remeber: &lt;code&gt;--global&lt;/code&gt; sets this for your entire account!
-+    &lt;/aside&gt;
+<span style="color:red">-    &lt;code&gt;--global&lt;/code&gt; sets this for your entire account!</span>
+<span style="color:green">+    &lt;aside class="footnote"&gt;</span>
+<span style="color:green">+      Remember: &lt;code&gt;--global&lt;/code&gt; sets this for your entire account!</span>
+<span style="color:green">+    &lt;/aside&gt;</span>
      &lt;/section&gt;
 </pre>
-
+<code>-</code> = removed <code style="margin-left:2em">+</code> = added
 </section>
 <section data-markdown data-state="soothe">
 ## Too many commands?
@@ -550,16 +565,46 @@ To see the history, use <code>git log</code>.
 * <code>--decorate</code> shows HEAD, branches, and tags
 </section>
 
+<section data-markdown bc="short log example">
+<pre class="small">$ <b>git log -5 --oneline --graph --decorate HEAD~59</b>
+*   c411c4d Merge pull request #131 from Sinetheta/master
+|\
+| * 495cb98 changed theme file swap to be relative to theme file instead of slide-deck
+|/
+* aa97d80 correction to code style in sky theme, adjusted transition demo page
+* 0c06469 prevent same theme from loading repeatedly
+* dc9b93a tweaks to the simple theme
+* 90f343e add theme config option, add sky theme, fix line-height of &lt;small&gt;
+* e3f3e9d Update README.md
+* 141d694 support for named links (closes #55)
+</pre>
+</section>
+
 <section data-markdown>
-## Checkout, Reset, Branch
+## Branch, Checkout, Reset
 
 Now we start to get really serious!
 There are three very powerful commands, that let you
 
 * move around in the history, pick files from the past
 * change all files in the working directory to another state
-* change a branch reference without comitting
+* change a branch reference without committing
 * create a new branch anywhere
+* get rid of erroneous work
+* etc.
+</section>
+
+<section data-markdown>
+## Branch
+
+<pre>git branch <i>branch_name</i> [commit] [-f]</pre>
+
+This creates a new branch right where the HEAD is,
+or at the given commit.
+
+<code>-f</code> can be used to move an existing branch around.
+
+<code>-d</code> deletes and <code>-m</code> renames.
 </section>
 
 <section data-markdown>
@@ -585,10 +630,14 @@ for creating a new branch and immediately switching to it.
 It's job is to move around the HEAD (including the current branch).
 
 <ul>
-  <li><code>--soft</code> only moves head (like all modes do) and doesn't touch index
+  <li><code>--soft</code> only moves HEAD (like all modes do) and doesn't touch index
   <li><code>--mixed</code> (default), resets index
-  <li><code>--soft</code> resets indes and working directory (local changes lost forever!)
+  <li><code>--soft</code> resets index and working directory (local changes lost forever!)
 </ul>
+</section>
+
+<section data-markdown bc="Reset Picture">
+<img style="width: 90%" src="res/reset-commit.svg" />
 </section>
 
 <section data-markdown>
@@ -602,6 +651,10 @@ This resets the entries for the specified files in the index.
 <pre>git reset [commit] -- path/filename</pre>
 
 Hence, this is the opposite of <code>add</code>.
+</section>
+
+<section data-markdown bc="Reset File Picture">
+<img style="width: 90%" src="res/reset-files.svg" />
 </section>
 
 <section data-markdown>
@@ -648,7 +701,84 @@ It is possible to *skip* the staging area. *Both are modified!*
 
 <img src="res/basic-usage-2.svg" />
 </section>
+</section> <!-- end hands on -->
+
+<section bc="Collaboration">
+<section data-markdown>
 </section>
+
+</section> <!-- end collab -->
+
+<section bc="Advanced">
+<section data-markdown>
+## Tree
+
+<pre class="small">$ <b>git ls-tree HEAD</b>
+100644 blob aa5fa7141766f8cf11d1d25d39cd04a2ffee7a95  .gitignore
+100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391  .nojekyll
+100644 blob 6fed1c32d012538ea783b0eb8d13a643cc981666  LICENSE
+100644 blob 27ed242ad6ab8bbb19c9b6182ee47b3939a15db0  README.md
+040000 tree 96d0c04c1d308c31faacfa26eeee2b4b256be116  css
+100644 blob a9aa16404dd4d78493208929095137097f133975  index.html
+040000 tree dd1ae6043bf368f504b2aff6e3b936607bf0be07  js
+040000 tree 6e46172d37ce36c570fd65458eefc02cee58c8b2  lib
+100644 blob 86578fe468e926513e2ca87d4c5792e333b4b58d  package.json
+040000 tree 04016b53decd21110649ef3cfdc936ca7849ddce  plugin
+040000 tree 3f2ac677462a553dbcfe81088d8b276b52c50f29  res
+</pre>
+</section>
+
+<section data-markdown>
+## Blob by Hash
+
+<pre class="small">$ <b>git show 27ed242ad6ab8bbb19c9b6182ee47b3939a15db0</b>
+# YAGT - Yet another Git talk
+
+This is a fork of [reveal.js](https://github.com/hakimel/reveal.js)
+with the goal to build a talk about [Git](http://www.git-scm.org/)
+and hence explaining it.
+
+[...]
+</pre>
+</section>
+
+<section data-markdown>
+## Commit
+
+<pre class="small">$ <b>git show eec35ee</b>
+commit eec35ee92b9e3d1f97aecd49b6d884db82604c47
+Author: Harald Schilly &lt;harald.schilly@gmail.com&gt;
+Date:   Sun Oct 7 01:19:58 2012 +0200
+
+    more links
+
+diff --git a/index.html b/index.html
+index 97f4792..1744916 100644
+--- a/index.html
++++ b/index.html
+@@ -502,21 +502,33 @@ It is possible to *skip* the staging area. *Both are modified!*
+
+[...]
+</pre>
+</section>
+
+<section data-markdown>
+## Cherry Picking
+
+...
+</section>
+
+<section data-markdown>
+## Rebasing
+
+...
+</section>
+
+<section data-markdown bc="rebase example">
+<img style="width: 90%" src="res/rebase.svg" />
+</section>
+
+</section> <!-- end advanced -->
 <!--
     <section data-markdown>
      ## Markdown support
