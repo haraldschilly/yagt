@@ -200,7 +200,20 @@ Such a commit also records the author, the time/date, and usually
 references to one or two previous commits.
 </section>
 <section data-markdown>
-## DAG = History
+## Working Dir and Staging
+
+To create a commit, you have to go "*shopping*".
+
+<ol>
+<li>Modify or create at least one file in your "<em>working directory</em>".</li>
+<li class="fragment">Explicitly go around and put desired
+changes into your shopping cart ("<em>index</em>").</li>
+<li class="fragment">Finally, a commit appends the content of this
+shopping cart to your "<em>history</em>".</li
+</ol>
+</section>
+<section data-markdown>
+## History
 
 The collection of all those commits, referencing to the
 immediate ancestor(s), builds the history of the entire project.
@@ -211,6 +224,11 @@ immediate ancestor(s), builds the history of the entire project.
 <aside class="footnote"><sup>1</sup> Yes, there could be more than one:
 <code>git checkout --orphan root2</code></aside>
 
+</section>
+<section data-markdown bc="DAG">
+<img style="width: 90%;" src="res/dag.svg" />
+
+DAG: [directed acyclic graph](http://en.wikipedia.org/wiki/Directed_acyclic_graph)
 </section>
 <section data-markdown>
 ## Branch
@@ -223,6 +241,11 @@ This is a linear ordering of commits until the root.
 Also, when we *commit*, this reference automatically changes
 and points to the new revision!
 </section>
+<section data-markdown bc="DAG w/ names">
+<img style="width: 95%;" src="res/dag-named.svg" />
+
+Same DAG with names.
+</section>
 <section data-markdown>
 ## HEAD
 The **HEAD** is a special companion,
@@ -230,6 +253,10 @@ which points to to the *current* branch
 or a specific revision.
 
 It is the base for current files in your actual working space.
+</section>
+<section data-markdown>
+## Committing Overview
+<img style="width: 80%;" src="res/commit-master.svg" />
 </section>
 <section data-markdown data-state="alert">
 ## Detached HEAD
@@ -243,13 +270,14 @@ Git does not care about those revisions which aren't reachable from any branch (
 This means, a commit in a detached state will get lost!
 </section>
 <section data-markdown data-state="alert">
+## Commit w/ Detached Head
+<img style="width: 80%;" src="res/commit-detached.svg" />
+</section>
+<section data-markdown data-state="alert">
 ## Rewriting History
 
-The ability of Git to discard all commits which are not reachable,
-is used in various ways. 
-
-Since this essentially removes parts of the history,
-this is called "**rewriting history**".
+The feature of Git to discard all commits which are not reachable,
+is used in various ways. This is often called "**rewriting history**".
 
 <ul class="fragment">
 <li>Cons: You can shoot yourself in the foot<sup>1</sup>.</li>
@@ -471,7 +499,7 @@ $ git rm fileY
 </pre>
 </section>
 <section data-markdown data-state="alert">
-##Edits after staging are lost!
+##Edits after staging are ignored!
 
 Only the changes that were present at the time of
 staging will be commited - not the additional modifications.
@@ -512,6 +540,102 @@ even including the commit message:
 
 <pre><code>$ git commit -am "commit message"</code></pre>
 </section>
+<section data-markdown>
+## Log
+To see the history, use <code>git log</code>.
+
+* <code>-[number]</code> limits to the last [number] entries
+* <code>--oneline</code> self explanatory
+* <code>--graph</code> tries to be artsy
+* <code>--decorate</code> shows HEAD, branches, and tags
+</section>
+
+<section data-markdown>
+## Checkout, Reset, Branch
+
+Now we start to get really serious!
+There are three very powerful commands, that let you
+
+* move around in the history, pick files from the past
+* change all files in the working directory to another state
+* change a branch reference without comitting
+* create a new branch anywhere
+</section>
+
+<section data-markdown>
+## Checkout
+
+The <code>checkout</code> command has several basic functions.
+
+The most basic one is for switching branches:
+<pre>git checkout branch_name</pre>
+Copy a file from the repository:
+<pre>git checkout [commit] -- path/filename</pre>
+
+<aside class="footnote">
+Apart from that, it also has the shortcut <code>-B</code>
+for creating a new branch and immediately switching to it.
+</aside>
+</section>
+
+<section data-markdown>
+## Reset
+
+<code>reset</code> sounds a bit more scary - and yes it is.
+It's job is to move around the HEAD (including the current branch).
+
+<ul>
+  <li><code>--soft</code> only moves head (like all modes do) and doesn't touch index
+  <li><code>--mixed</code> (default), resets index
+  <li><code>--soft</code> resets indes and working directory (local changes lost forever!)
+</ul>
+</section>
+
+<section data-markdown>
+## Reset -- path/filename
+
+Like <code>checkout</code>, <code>reset</code> also
+has a mode where it works on paths to files.
+
+This resets the entries for the specified files in the index.
+
+<pre>git reset [commit] -- path/filename</pre>
+
+Hence, this is the opposite of <code>add</code>.
+</section>
+
+<section data-markdown>
+## Merge
+
+Finally, once we have several alternative realities in 
+different branches, we want to "*merge*" them into one.
+
+The <code>merge</code> command has the job, of creating
+a new commit with more than one parent.<sup>1</sup>
+
+<aside class="footnote"><sup>1</sup> Due to "*fast-forwarding*", a merge
+could still lead to just one parent. In this case, the
+branches are just moved to be on top of each other.
+</aside>
+</section>
+
+<section data-markdown bc="git help merge">
+<pre class="small">Assume the following history exists and the 
+current branch is "master":
+
+  A---B---C topic
+ /
+D---E---F---G master
+
+Then "<b>git merge topic</b>" will replay the changes made 
+on the topic branch [...] and record the result 
+in a new commit [...]
+
+  A---B---C topic
+ /         \
+D---E---F---G---H master
+</section>
+
 <section data-markdown>
 ## Summary /1
 
