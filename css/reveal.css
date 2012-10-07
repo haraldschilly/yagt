@@ -215,7 +215,7 @@ body {
 	box-shadow: 0px 0px 6px rgba(0,0,0,0.3);
 }
 
-.reveal code {
+.reveal code, .reveal pre {
 	font-family: monospace;
 	overflow: auto;
 	max-height: 400px;

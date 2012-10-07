@@ -860,8 +860,8 @@ if (cur_title_txt != null) {
 }
 
 // footnote
-var footnote_txt = document.querySelector('.reveal .slides>section.present>section.present>aside.footnote');
-dom.footnote.innerHTML = (footnote_txt != null) ? footnote_txt.innerHTML : "";
+var footnote = document.querySelector('.reveal .slides>section.present>section.present>aside.footnote');
+dom.footnote.innerHTML = (footnote != null) ? footnote.innerHTML : "";
 
 		// Close the overview if it's active
 		if( overviewIsActive() ) {

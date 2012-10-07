@@ -65,10 +65,15 @@ body {
 	color: white; 
 }
 
+.reveal>div.slides {
+  max-width: 1000px;
+  width: 90%;
+  padding: .8em 0 0 0;
+}
+
 .reveal blockquote {
   background:rgba(0, 0, 0, 0.2);
 }
-
 .reveal code, .reveal pre {
   background: rgba(0,0,0,0.15);
   box-shadow: 0px 0px 6px rgba(0,0,0,0.15);
@@ -76,6 +81,11 @@ body {
   padding-left: .2em;
   padding-right: .2em;
   border-radius: 3px;
+}
+.reveal pre>code {
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
 }
 .reveal code:hover, .reveal pre:hover {
   background: rgba(255,255,255,1.0);
@@ -87,10 +97,15 @@ body {
   left: -2px;
   z-index: 20;
 }
+.reveal pre>code:hover {
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+}
 
 .reveal pre {
   margin: 20px auto;
-  font-size: .7em;
+  font-size: .8em;
   width: 100%;
 }
 
@@ -120,8 +135,12 @@ body {
   line-height: 110%;
 }
 
+pre.small {
+  font-size: 60%;
+}
+
 .reveal li {
-  margin: .3em auto;
+  margin: .1em auto;
 }
 /*********************************************
  * HEADERS
@@ -237,10 +256,9 @@ hr {
 .reveal .logo { 
   position: fixed;
   width: 120px;
-  height: 60px;
   z-index: 0;
-  left: 20px;
-  bottom: 10px;
+  left: .3em;
+  bottom: .2em;
   vertica-align: bottom;
 }
 

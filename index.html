@@ -128,125 +128,6 @@ It also fits much better with our mental model of *collaboration* in general.
   </section>
 </section>
 
-<section bc="First Steps">
-  <section data-markdown bc="Installation">
-    ## First: Installation
-
-* download from [Git homepage](http://www.git-scm.com/)<sup>1</sup>
-* Ubuntu: <code>sudo apt-get install git</code>
-* MacPorts: <code>sudo port install git-core</code>
-
-    ### Install Tools
-    <code>sudo apt-get install gitk git-cola</code>
-
-    <aside class="footnote">
-    <sup>1</sup> http://www.git-scm.com/<br/>
-    </aside>
-  </section>
-  <section>
-  <h2>Basics</h2>
-
-  Git is a <b>command-line tool</b>, called via <code>git</code>.
-
-  <h2 class="fragment">HELP</h2>
-<div class="fragment">
-  <h3>I NEED HHHEEEELP!!!</h3>
-  <code>git help [&lt;command&gt;]</code> 
-  <br/>
-  or
-  <br/>
-  <code> git [&lt;command&gt;] --help</code>
-  </div>
-<aside class="footnote">GUIs: <code>gitk</code> and <code>git-gui</code>,
-<em><a href="http://git-scm.com/downloads/guis">Git Guis</a></em>,
-<a href="http://git-cola.github.com/">git-cola</a>,
-<a href="http://www.syntevo.com/smartgit/index.html">SmartGit</a>,
-<a href="http://code.google.com/p/tortoisegit/">TortoiseGit</a>,
-<a href="http://www.eclipse.org/egit/">Eclipse</a>, 
-... but this talk stays "pure".
-  </section>
-  <section data-markdown>
-  ## Configuration
-
-  Git has a global <code>~/.gitconfig</code> and project specific local
-  <code>.git/config</code> configuration file.
-
-  Edit them either directly (leet!) or via
-
-  <code>git config [--global] ...</code>
-  </section>
-  <section data-markdown>
-    ## Config: Identity
-
-    All commits are associated with you.
-    That's necessary for [licensing copyrighted works](http://www.wipo.int/treaties/en/ip/berne/trtdocs_wo001.html).
-
-    <pre><code contenteditable>$ git config --global user.name "Gitti Gitian"
-    $ git config --global user.email "gitti@gitiscool.com"
-    # and check it
-    $ git config --global user.name
-    Gitti Gitian
-    </code></pre>
-
-    <aside class="footnote">
-      Remeber: <code>--global</code> sets this for your entire account!
-    </aside>
-    </section>
-
-    <section data-markdown>
-    ## Config: Aliases
-
-    Git allows to create custom commands. They can be shortcuts
-    or even small scripts.
-
-    Set them this way:
-
-    <pre><code contenteditable>$ git config --global alias.st status</code></pre>
-    </section>
-
-    <section data-markdown>
-    ## My Aliases
-    <pre><code contenteditable>$ git aliases
-    st = status
-    ci = commit
-    ll = log --oneline --graph --decorate --all -20
-    br = branch
-    co = checkout
-    df = diff
-    who = shortlog -s --
-    aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'
-    </code></pre>
-    </section>
-
-    <section data-markdown>
-    ## Config: Editor
-
-    Git sometimes pops up an text editor.
-
-    Choose your poison:
-
-    <pre><code>$ git config --global core.editor "vim"</code></pre>
-    </section>
-
-    <section data-markdown>
-    ## Config: Merge Tool
-
-    This is what Git gives you via <code>git mergetool</code>,
-    when it gives up resolving conflicts.
-
-    <pre><code>$ git config --global merge.tool "meld"</code></pre>
-
-    </section>
-    <section data-markdown>
-    ## Config: Color
-
-    Makes reading output much easier.
-
-    <pre><code>$ git config --global color.ui true</code></pre>
-
-    </section>
-  </section>
-  <!-- ################# -->
 <section bc="Prerequisites">
 <section data-markdown>
 ## Internal suff
@@ -308,7 +189,12 @@ Each entry points to one specific "hashed" content of a file.
 <section data-markdown>
 ## Commit
 
-One specific snapshop of a tree with all files is called **commit**.
+A **commit** is one specific snapshot in time of a tree with all referenced
+files in their current state.
+
+This is the fundamental building block of everything inside the
+Git repository. Learning Git means mastering how to create 
+commits and how to juggle them around.
 
 Such a commit also records the author, the time/date, and usually
 references to one or two previous commits.
@@ -319,7 +205,7 @@ references to one or two previous commits.
 The collection of all those commits, referencing to the
 immediate ancestor(s), builds the history of the entire project.
 
-* The **root** is a commit with no ancestors<sup>1</sup>.
+* A **root** is a commit with no ancestors<sup>1</sup>.
 * A **merge** is a commit with more than one ancestor.
 
 <aside class="footnote"><sup>1</sup> Yes, there could be more than one:
@@ -356,12 +242,32 @@ Then, no branch reference automatically moves with the next commit!
 Git does not care about those revisions which aren't reachable from any branch (or tag).
 This means, a commit in a detached state will get lost!
 </section>
+<section data-markdown data-state="alert">
+## Rewriting History
+
+The ability of Git to discard all commits which are not reachable,
+is used in various ways. 
+
+Since this essentially removes parts of the history,
+this is called "**rewriting history**".
+
+<ul class="fragment">
+<li>Cons: You can shoot yourself in the foot<sup>1</sup>.</li>
+<li>Pros: It allows you to fix errors (e.g. the last commit was incomplete),
+or to extract parts of a larger history.</li>
+</ul>
+
+<aside class="footnote">
+<sup>1</sup>But don't worry, Git takes great care to not loose anything
+unless you <code>-f</code> "*force*" it.<br/>
+There is also a safety net called "*reflog*".
+</section>
 <section data-markdown>
 ## Selecting Revisions
 
 Quite often it is necessary to reference one or more revision.
 <ul>
-<li>first few characters of the hashsum</li>
+<li>start of the hashsum <code>8frfa1</code></li>
 <li class="fragment">ancestors: <code>master~</code> or <code>master~2</code> ...</li>
 <li class="fragment">parent 2 of a merge: <code>8r7af^^</code></li>
 <li class="fragment">combo move: <code>master~3^^~</code></li>
@@ -374,6 +280,153 @@ Quite often it is necessary to reference one or more revision.
 </aside>
 </section>
 </section>
+<section bc="First Steps">
+  <section data-markdown bc="Installation">
+    ## First: Installation
+
+* download from [Git homepage](http://www.git-scm.com/)<sup>1</sup>
+* Ubuntu: <code>sudo apt-get install git</code>
+* MacPorts: <code>sudo port install git-core</code>
+
+    ### Install Tools
+    <code>sudo apt-get install gitk git-cola</code>
+
+    <aside class="footnote">
+    <sup>1</sup> http://www.git-scm.com/<br/>
+    </aside>
+  </section>
+  <section>
+  <h2>Basics</h2>
+
+  Git is a <b>command-line tool</b>, called via <code>git</code>.
+
+  <h2 class="fragment">HELP</h2>
+<div class="fragment">
+  <h3>I NEED HHHEEEELP!!!</h3>
+  <code>git help [&lt;command&gt;]</code> 
+  <br/>
+  or
+  <br/>
+  <code> git [&lt;command&gt;] --help</code>
+  </div>
+<aside class="footnote">GUIs: <code>gitk</code> and <code>git-gui</code>,
+<em><a href="http://git-scm.com/downloads/guis">Git Guis</a></em>,
+<a href="http://git-cola.github.com/">git-cola</a>,
+<a href="http://www.syntevo.com/smartgit/index.html">SmartGit</a>,
+<a href="http://code.google.com/p/tortoisegit/">TortoiseGit</a>,
+<a href="http://www.eclipse.org/egit/">Eclipse</a>, 
+... but this talk stays "pure".
+</section>
+<section data-markdown>
+## Configuration
+
+Git has a global <code>~/.gitconfig</code> and project specific local
+<code>.git/config</code> configuration file.
+
+Edit them either directly (leet!) or via
+
+<code>git config [--global] ...</code>
+</section>
+<section data-markdown>
+## Config: Identity
+
+All commits are associated with you.
+That's necessary for [licensing copyrighted works](http://www.wipo.int/treaties/en/ip/berne/trtdocs_wo001.html).
+
+<pre><code contenteditable>$ git config --global user.name "Gitti Gitian"
+$ git config --global user.email "gitti@gitiscool.com"
+# and check it
+$ git config --global user.name
+Gitti Gitian
+</code></pre>
+
+<aside class="footnote">
+  Remeber: <code>--global</code> sets this for your entire account!
+</aside>
+</section>
+
+<section data-markdown>
+## Config: Aliases
+
+Git allows to create custom commands. They can be shortcuts
+or even small scripts.
+
+Set them this way:
+
+<pre><code contenteditable>$ git config --global alias.st status</code></pre>
+</section>
+
+<section data-markdown>
+## My Aliases
+<pre class="small"><code contenteditable>$ git aliases
+st = status
+ci = commit
+ll = log --oneline --graph --decorate --all -20
+br = branch
+co = checkout
+df = diff
+who = shortlog -s --
+aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'
+</code></pre>
+</section>
+
+<section data-markdown>
+## Config: Editor
+
+Git sometimes pops up an text editor.
+
+Choose your poison:
+
+<pre><code>$ git config --global core.editor "vim"</code></pre>
+</section>
+
+<section data-markdown>
+## Config: Merge Tool
+
+This is what Git gives you via <code>git mergetool</code>,
+when it gives up resolving conflicts.
+
+<pre><code>$ git config --global merge.tool "meld"</code></pre>
+
+</section>
+<section data-markdown>
+## Config: Color
+
+Makes reading output much easier.
+
+<pre><code>$ git config --global color.ui true</code></pre>
+
+</section>
+<section data-markdown>
+## Config: Ignore Files
+Usually, your working directory contains a mix of tracked files
+and generated files which should not be tracked.
+
+You can tell Git to ignore them globally:
+
+<pre>$ git config --global core.excludesfile ~/.gitignore</pre>
+
+and project specific:<br/> edit <code>$PROJ_ROOT/.gitignore</code>
+</section>
+<section>
+<h2>Config: Ignore Files /2</h2>
+Typical entries:
+<pre class="small">*.o
+*.so
+*.class
+*.jar
+*.pdf        # generated from .tex files
+*~           # temporary editor files
+*.swp        # vim temp file
+*.min.js
+*.log
+*.DS_Store   # Mac users
+</pre>
+<aside class="footnote">
+<a href="https://help.github.com/articles/ignoring-files">more examples what to exclude</a></aside>
+    </section>
+  </section>
+  <!-- ################# -->
 <section bc="Hands On">
 <section data-markdown>
 ## Start a repository
@@ -401,19 +454,21 @@ sending your commits to it (<em>"pushing"</em>).
 
 </section>
 <section data-markdown>
-## Staging
+<h2>Staging</h2>
 
 Git has a so called <em>"staging area"</em>.
 This is a selection of modified files,
 or parts of files, that you wish to be part of the next
-<em>"[commit](#/3/3)"</em>.
+<em>"[commit](#/2/5)"</em>.
 
-<pre><code>$ git add fileA fileB ...
-# or just all, which are already tracked
+<pre>$ git add fileA fileB ...
+# or just all, which are already tracked or deleted
 $ git add -A
 # or just a part
 $ git add -p fileX
-</code></pre>
+# to get rid of files
+$ git rm fileY
+</pre>
 </section>
 <section data-markdown data-state="alert">
 ##Edits after staging are lost!
@@ -431,9 +486,7 @@ Creating a new commit is probably the most often used feature.
 Usually, it 
 
 </section>
-<section data-markdown>
-## Diff
-
+<section data-markdown bc="Diff">
 It is also easy to see commit **diff**erences.
 
 <pre class="small">$ git diff HEAD~3..HEAD~2 index.html
