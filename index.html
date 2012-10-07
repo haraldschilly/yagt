@@ -515,6 +515,8 @@ Reason: Staging means, that the modifications are copied into
 something called *"index"*; it has nothing to do with the actual files.
 
 To see what's going on: <code>git status</code>.
+
+<aside class="footnote"><code>git diff --cached</code> tells what will be committed</aside>
 </section>
 <section data-markdown>
 ## Committing
@@ -602,7 +604,7 @@ There are three very powerful commands, that let you
 This creates a new branch right where the HEAD is,
 or at the given commit.
 
-<code>-f</code> can be used to move an existing branch around.
+<code>-f</code> can be used to move an existing branch *reference* around.
 
 <code>-d</code> deletes and <code>-m</code> renames.
 </section>
@@ -623,11 +625,23 @@ for creating a new branch and immediately switching to it.
 </aside>
 </section>
 
+<section data-markdown bc="Checkout Branch Graphic">
+<img style="width: 90%" src="res/checkout-branch.svg" />
+
+checking out a branch (HEAD moves)
+</section>
+
+<section data-markdown bc="Checkout File Graphic">
+<img style="width: 90%" src="res/checkout-files.svg" />
+
+checking out files from the history (HEAD doesn't move)
+</section>
+
 <section data-markdown>
 ## Reset
 
 <code>reset</code> sounds a bit more scary - and yes it is.
-It's job is to move around the HEAD (including the current branch).
+It's job is to move around the branch reference underneath the HEAD.
 
 <ul>
   <li><code>--soft</code> only moves HEAD (like all modes do) and doesn't touch index
@@ -636,8 +650,9 @@ It's job is to move around the HEAD (including the current branch).
 </ul>
 </section>
 
-<section data-markdown bc="Reset Picture">
+<section data-markdown bc="Reset Graphic">
 <img style="width: 90%" src="res/reset-commit.svg" />
+HEAD+master moves, three commits are lost
 </section>
 
 <section data-markdown>
@@ -655,6 +670,19 @@ Hence, this is the opposite of <code>add</code>.
 
 <section data-markdown bc="Reset File Picture">
 <img style="width: 90%" src="res/reset-files.svg" />
+</section>
+
+<section data-markdown>
+## Summary /1
+
+<img src="res/basic-usage.svg" />
+</section>
+<section data-markdown>
+### Summary /2
+
+It is possible to *skip* the staging area. *Both are modified!*
+
+<img src="res/basic-usage-2.svg" />
 </section>
 
 <section data-markdown>
@@ -688,23 +716,96 @@ in a new commit [...]
  /         \
 D---E---F---G---H master
 </section>
-
-<section data-markdown>
-## Summary /1
-
-<img src="res/basic-usage.svg" />
-</section>
-<section data-markdown>
-### Summary /2
-
-It is possible to *skip* the staging area. *Both are modified!*
-
-<img src="res/basic-usage-2.svg" />
-</section>
 </section> <!-- end hands on -->
 
 <section bc="Collaboration">
 <section data-markdown>
+## P2P
+
+Ok wait. Wasn't Git about *collaboration*?
+
+<p class="fragment">
+Well, 99% happen locally.
+<br/><br/>
+The missing piece is a way to send and recieve commits
+based on such references behind branches.
+</p>
+</section>
+
+<section data-markdown>
+## origin/master
+
+When you do a <code>git clone git://.../</code>,
+Git has already set you up with a "*remote*"
+called **origin** pointing to the given URL.
+
+Also, your main branch is usually called **master**.
+
+Hence, the reference to the master branch on the server is <code>origin/master</code>.
+</section>
+
+<section data-markdown>
+## pull/push and fetch
+
+* <code>push</code> uploads commits that aren't on the server to it
+* <code>fetch</code> downloads new commits which you don't have
+* <code>pull</code> does a fetch and also merges with your respective branch
+</section>
+
+<section data-markdown>
+## Tracking
+
+Finally, you have to tell Git, which of your local branches
+correspond to which ones on the remote repository.
+
+This is called "*tracking*" and could be done via
+<code>git branch --set-upstream master origin/master</code>
+
+Also, while pushing to a remote, you can do this
+via the <code>-u</code> switch: <code>git push -u joe featureX</code>.
+</section>
+
+<section data-markdown>
+## Check tracking
+
+<pre>$ <b>git branch -vv</b>
+* master cf36560 [origin/master] readme
+  other  d39c6f1 [origin/other] init "other" branch, ...
+</pre>
+
+<aside class="footnote">There is probably a better way, it's also in the .git/config file</aside>
+</section>
+
+<section data-markdown>
+## Remote
+
+<code>git remote</code> manages all remote servers.
+
+You can do <code>git remote add [name] [URL]</code> to add a remote server.
+</section>
+
+<section data-markdown>
+## List Remotes
+
+<pre>$ <b>git remote -v show</b>
+origin  git@github.com:haraldschilly/panobbgo.git (fetch)
+origin  git@github.com:haraldschilly/panobbgo.git (push)
+uni ssh://schilly@login/.../panobbgo (fetch)
+uni ssh://schilly@login/.../panobbgo (push)
+</pre>
+</section>
+
+<section data-markdown data-state="alert">
+## Outdated references
+
+Git could be "behind" new changes on the server.
+That usually causes headaches.
+
+In that case, do a <code>git remote update</code>
+to get the references straight.
+
+Then, e.g. <code>git log --decorate</code> shows the remote references
+at the correct positions!
 </section>
 
 </section> <!-- end collab -->
@@ -765,13 +866,14 @@ index 97f4792..1744916 100644
 <section data-markdown>
 ## Cherry Picking
 
-...
+Copy one changeset from one branch into another one.
 </section>
 
 <section data-markdown>
 ## Rebasing
 
-...
+Basically, this resets to an earlier revision and replays
+the history "in a different way" by consecutive cherry picks.
 </section>
 
 <section data-markdown bc="rebase example">
