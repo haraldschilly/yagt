@@ -257,6 +257,7 @@ hr {
 .reveal .logo { 
   position: fixed;
   width: 120px;
+  height: 55px;
   z-index: 0;
   left: .3em;
   bottom: .2em;
