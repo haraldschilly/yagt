@@ -328,9 +328,10 @@ This means, a commit in a detached state will get lost!
 <pre class="small">$ <b>cat .git/HEAD</b>
 b1b7e86e011aebad8df6d9af33214abedb113983</pre>
 </section>
-<section data-markdown data-state="alert">
-## Commit w/ Detached Head
-<img style="width: 80%;" src="res/commit-detached.svg" />
+<section data-markdown data-state="alert" bc="Commit w/ Detached Head">
+<img style="width: 90%;" src="res/commit-detached.svg" />
+
+committing w/ a detached head
 </section>
 <section data-markdown data-state="alert">
 ## Rewriting History
@@ -341,7 +342,7 @@ is used in various ways. This is often called "**rewriting history**".
 <ul class="fragment">
 <li>Cons: You can shoot yourself in the foot<sup>2</sup>.</li>
 <li>Pros: It allows you to fix errors (e.g. the last commit was incomplete),
-or to extract parts of a larger history.</li>
+or to extract and combine parts of a larger history.</li>
 </ul>
 
 <aside class="footnote">
@@ -370,7 +371,7 @@ There is also a safety net called "*reflog*".
 </section>
 <section bc="First Steps">
   <section data-markdown bc="Installation">
-    ## First: Installation
+    ## Installation
 
 * download from [Git homepage](http://www.git-scm.com/)<sup>1</sup>
 * Ubuntu: <code>sudo apt-get install git</code>
@@ -413,7 +414,7 @@ Git has a global <code>~/.gitconfig</code> and project specific local
 
 Edit them either directly (leet!) or via
 
-<code>git config [--global] ...</code>
+<code>git config [--global] [--edit] ...</code>
 </section>
 <section data-markdown>
 ## Config: Identity
@@ -525,7 +526,7 @@ with whom you want to work together.
 
 <pre>$ mkdir myshinynewrepo
 $ cd !$
-$ git --bare
+$ git init
 </pre>
 
 </section>
@@ -538,7 +539,8 @@ it is easier to just <em>"clone"</em> it.
 <pre>$ git clone [git|http]://server/.../project.git</pre>
 
 Then, this <em>remote</em> server is already setup for 
-sending your commits to it (<em>"pushing"</em>).
+sending your commits to it 
+(<em>"<a href="#/5">pushing</a>"</em>).
 
 </section>
 <section data-markdown>
@@ -674,7 +676,8 @@ or at the given commit.
 
 The <code>checkout</code> command has several basic functions.
 
-The most basic one is for switching branches:
+The most basic one is for switching branches,
+which moves the HEAD and populates the index and working directory:
 <pre>git checkout branch_name</pre>
 Copy a file from the repository:
 <pre>git checkout [commit] -- path/filename</pre>
@@ -764,16 +767,16 @@ branches are just moved to be on top of each other.
 <pre class="small">Assume the following history exists and the 
 current branch is "master":
 
-  A---B---C topic
- /
+      A---B---C topic
+     /
 D---E---F---G master
 
 Then "<b>git merge topic</b>" will replay the changes made 
 on the topic branch [...] and record the result 
 in a new commit [...]
 
-  A---B---C topic
- /         \
+      A---B---C topic
+     /         \
 D---E---F---G---H master
 </section>
 </section> <!-- end hands on -->
@@ -798,7 +801,7 @@ Lonely Git repositories are sad repositories.
 Share your project with collaborators via hosting services!
 
 <ul class="small">
-<li>Any server with an <code>ssh</code> server and Git installed</li>
+<li>Any server with an <code>sshd</code> server and Git installed</li>
 <li><a href="https://www.github.com/">GitHub</a> - very popular, issue tracker, hosting, wiki</li>
 <li><a href="http://gitorious.org/">Gitorious</a> - open-source project hosting w/ collaboration tools.</a> </li>
 <li><a href="https://bitbucket.org/">Bitbucket</a> - similar to GitHub, also offers free non-public hosting</li>
@@ -896,8 +899,9 @@ at the correct positions!
 
 <code>git tag name [commit]</code> creates a named reference to a specific commit.
 
-It is very similar to a branch reference, but doesn't move any longer.
-Usually, it is used to name a specific release version.
+It is very similar to a branch reference, but stays fixed.
+
+Usually, it is used to name a specific release version, <code>v2.7.1</code>.
 
 Checking out a tag brings you into the
 <a href="#/2/13">detached HEAD</a> state.
@@ -1087,15 +1091,14 @@ git rebase --onto $TARGET START_SHA1
      </table>
      </section>
 
-     <section>
-     <h3>Copyright</h3>
+     <section bc="Copyright">
      <h2><b>&copy; 2012 <a href="http://harald.schil.ly/">Harald Schilly</a></b></h2>
      <hr/>
      <h2>Fork Me: <a href="http://github.com/haraldschilly/yagt">yagt@github</a></h2>
      <h2>License: <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA</a></h2>
      <p>Based on work by <a href="http://hakim.se">Hakim El Hattab</a> 
-     and <a href="http://marklodato.github.com/visual-git-guide/">Mark Lodato</a>. 
-     Details: <code>git blame|log</code> ;-)</p>
+     and <a href="http://marklodato.github.com/visual-git-guide/">Mark Lodato</a>.<br/>
+     Details: <code>git blame</code> ;-)</p>
      </section>
     </section>
    </div>
