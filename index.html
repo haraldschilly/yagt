@@ -56,7 +56,7 @@
 </aside>
 </section>
     </section>
-    <script>
+    <script><!-- easter egg -->
       var yagt  = document.querySelector("#YAGT");
       var yagt2 = document.querySelector("#YAGT2");
       var tt = "Yes, A Great Git Talk!".split("").reverse();
@@ -139,7 +139,7 @@ All Git operations manipulate and operate only on those!
 ## Distributed
 
 Git is also a *distributed* version control system.
-This means, you have all the history on your local machine.
+This means, everyone has all the history stored locally.
 
 This allows you to make any kind of queries or modifications
 without connecting to a central server.
@@ -229,8 +229,8 @@ not the usual one with "filenames".
 ## Tree = File-System
 
 All files tracked by Git are hierarchically organized by "*trees*".
-Each entry points to one specific "hashed" content of a file
-or another tree (a sub-directory).
+Each entry of a tree points to one specific "hashed" content of a file
+(a "*blob*") or another tree (a sub-directory).
 
 Besides that, the name of the file is recorded, too.
 </section>
@@ -254,7 +254,7 @@ To create a commit, you have to go "*shopping*".
 
 <ol>
 <li>Modify or create at least one file in your "<em>working directory</em>".</li>
-<li class="fragment">Explicitly go around and put desired
+<li class="fragment">Go around and explicitly put desired
 changes into your shopping cart ("<em>index</em>").</li>
 <li class="fragment">Finally, a commit appends the content of this
 shopping cart to your "<em>history</em>".</li
@@ -273,21 +273,24 @@ immediate ancestor(s), builds the history of the entire project.
 <code>git checkout --orphan root2</code></aside>
 
 </section>
-<section data-markdown bc="History Graph">
-<img style="width: 90%;" src="res/dag.svg" />
-
-History is a [DAG](http://en.wikipedia.org/wiki/Directed_acyclic_graph)
-</section>
 <section data-markdown>
 ## Branch
 
 It is hard to remember all those constantly changing hashsums.
 
-A *reference* to a specific commit is the start of a **branch**.
-This is a linear ordering of commits until the root.
+A *named reference* to a specific commit is the start of a **branch**.
+It is the linear ordering of all reachable commits until the root.
 
-Also, when we *commit*, this reference automatically changes
-and points to the new commit!
+Also, when we *commit*, the branch reference automatically changes
+and points to the new commit!<sup>1</sup>
+
+<aside class="footnote">
+<sup>1</sup> not always true, see <a href="#/2/13">detached HEAD</a>
+</section>
+<section data-markdown bc="History Graph">
+<img style="width: 90%;" src="res/dag.svg" />
+
+History is a [DAG](http://en.wikipedia.org/wiki/Directed_acyclic_graph)
 </section>
 <section data-markdown bc="History Graph (annotated)">
 <img style="width: 95%;" src="res/dag-named.svg" />
@@ -306,9 +309,10 @@ It is the base for all files in your current working space.
 ref: refs/heads/master
 </pre>
 </section>
-<section data-markdown>
-## Committing Overview
-<img style="width: 80%;" src="res/commit-master.svg" />
+<section data-markdown bc="Committing Diagram">
+<img style="width: 95%;" src="res/commit-master.svg" />
+
+Committing
 </section>
 <section data-markdown data-state="alert">
 ## Detached HEAD
@@ -316,7 +320,7 @@ ref: refs/heads/master
 Unfortunately, your **HEAD** could fall off.
 
 In this case, it points directly to a revision and not a branch.
-Then, the branch reference doesn't automatically moves with the next commit!
+Then, the branch reference doesn't automatically move with the next commit!
 
 Git does not care about those revisions which aren't reachable from any branch (or tag).
 This means, a commit in a detached state will get lost!
@@ -335,7 +339,7 @@ The feature<sup>1</sup> of Git to discard all commits which are not reachable,
 is used in various ways. This is often called "**rewriting history**".
 
 <ul class="fragment">
-<li>Cons: You can shoot yourself in the foot<sup>1</sup>.</li>
+<li>Cons: You can shoot yourself in the foot<sup>2</sup>.</li>
 <li>Pros: It allows you to fix errors (e.g. the last commit was incomplete),
 or to extract parts of a larger history.</li>
 </ul>
@@ -343,15 +347,15 @@ or to extract parts of a larger history.</li>
 <aside class="footnote">
 <sup>1</sup>Yes, feature not bug. <b>This is the key to repair mistakes!</b><br/>
 <sup>2</sup>But don't worry, Git takes great care to not loose anything
-unless you <code>-f</code> "*force*" it.<br/>
+unless you <code>-f</code> "*force*" it.
 There is also a safety net called "*reflog*".
 </section>
 <section data-markdown>
 ## Selecting Revisions
 
-Quite often it is necessary to reference one or more revision.
 <ul>
-<li>start of the hashsum <code>8frfa1</code></li>
+<li><code>HEAD</code> is where you are</li>
+<li class="fragment">beginning of the hashsum <code>8frfa1</code></li>
 <li class="fragment">ancestors: <code>master~</code> or <code>master~2</code> ...</li>
 <li class="fragment">parent 2 of a merge: <code>8r7af^^</code></li>
 <li class="fragment">combo move: <code>master~3^^~</code></li>
@@ -789,6 +793,39 @@ as part of branches, based on given references.
 </section>
 
 <section data-markdown>
+## Hosting
+Lonely Git repositories are sad repositories.
+Share your project with collaborators via hosting services!
+
+<ul class="small">
+<li>Any server with an <code>ssh</code> server and Git installed</li>
+<li><a href="https://www.github.com/">GitHub</a> - very popular, issue tracker, hosting, wiki</li>
+<li><a href="http://gitorious.org/">Gitorious</a> - open-source project hosting w/ collaboration tools.</a> </li>
+<li><a href="https://bitbucket.org/">Bitbucket</a> - similar to GitHub, also offers free non-public hosting</li>
+<li><a href="http://code.google.com/">Google Code</a> - issue tracker and wiki</a></li>
+<li><a href="http://www.codeplex.com/">CodePlex</a> - even Microsoft talks Git</a></li>
+<li>... or a shared directory initialized with <code>git init --bare</code> usually ending in <code>*.git</code>.</li>
+</ul>
+</section>
+
+<section data-markdown>
+## Remote
+
+<code>git remote</code> manages all remote servers.
+
+<code>git remote add [name] [URL]</code> adds a remote server.
+
+And you can list remotes
+
+<pre>$ <b>git remote -v show</b>
+origin  git@github.com:.../...git (fetch)
+origin  git@github.com:.../...git (push)
+uni ssh://name@login/.../repo (fetch)
+uni ssh://name@login/.../repo (push)
+</pre>
+</section>
+
+<section data-markdown>
 ## origin/master
 
 When you do a <code>git clone git://.../</code>,
@@ -813,14 +850,18 @@ Hence, the reference to the master branch on the server is <code>origin/master</
 <section data-markdown>
 ## Tracking
 
-Finally, you have to tell Git, which of your local branches
+Finally, you can to tell Git, which of your local branches
 correspond to which ones on the remote repository.
 
 This is called "*tracking*" and could be done via
-<code>git branch --set-upstream master origin/master</code>
+<pre>git branch --set-upstream master origin/master</pre>
 
-Also, while pushing to a remote, you can do this
+Also, when pushing to a remote, you can do this
 via the <code>-u</code> switch: <code>git push -u joe featureX</code>.
+
+<aside class="footnote">
+In case of total confusion, this is also in <code>.git/config</code>.
+</aside>
 </section>
 
 <section data-markdown>
@@ -834,30 +875,11 @@ via the <code>-u</code> switch: <code>git push -u joe featureX</code>.
 <aside class="footnote">There is probably a better way, it's also in the .git/config file</aside>
 </section>
 
-<section data-markdown>
-## Remote
-
-<code>git remote</code> manages all remote servers.
-
-You can do <code>git remote add [name] [URL]</code> to add a remote server.
-</section>
-
-<section data-markdown>
-## List Remotes
-
-<pre>$ <b>git remote -v show</b>
-origin  git@github.com:.../...git (fetch)
-origin  git@github.com:.../...git (push)
-uni ssh://name@login/.../repo (fetch)
-uni ssh://name@login/.../repo (push)
-</pre>
-</section>
-
 <section data-markdown data-state="alert">
 ## Outdated references
 
-Git could be "behind" new changes on the server.
-That usually causes headaches.
+Git could be unaware of new changes on the server.
+That usually causes headaches!
 
 In that case, do a <code>git remote update</code>
 to get the references straight.
@@ -870,11 +892,35 @@ at the correct positions!
 
 <section bc="Advanced">
 <section data-markdown>
+## Tags
+
+<code>git tag name [commit]</code> creates a named reference to a specific commit.
+
+It is very similar to a branch reference, but doesn't move any longer.
+Usually, it is used to name a specific release version.
+
+Checking out a tag brings you into the
+<a href="#/2/13">detached HEAD</a> state.
+
+It's also possible to cryptographically sign it.
+</section>
+
+<section data-markdown>
+## Quick Undo
+
+One way to do a quick undo:
+
+<code>git reset [--hard] HEAD^</code>
+</section>
+
+<section data-markdown>
 ## Reflog
 
 As a safeguard, Git stores the entire journey of the HEAD.
 This "*reflog*" prevents Git from forgetting
 unreachable commits for at least a few weeks.
+
+<b>This means, the quick undo can be undone!</b>
 
 <code>git reflog</code> lists you the relevant hashes.
 Use <code>reset --hard</code> to reset everything back to how it was.
@@ -944,10 +990,25 @@ Copy one changeset from one branch into another one.
 
 Basically, this resets to an earlier revision and replays
 the history "in a different way" by consecutive cherry picks.
+
 </section>
 
 <section data-markdown bc="rebase example">
 <img style="width: 90%" src="res/rebase.svg" />
+</section>
+
+<section data-markdown>
+## Interactive Rebase
+
+<code>git rebase -i HEAD~[n]</code>
+
+It lets you:
+<ul>
+  <li>reorder commits</li>
+  <li>edit an earlier one (e.g. stash your current work before rebasing and ammend it earlier!)</li>
+  <li>get rid of them</li>
+  <li>squash some together</li>
+</ul>
 </section>
 
 <section data-markdown>
@@ -956,12 +1017,12 @@ the history "in a different way" by consecutive cherry picks.
 This is the art of combining several consecutive commits into just one.
 This can be done via <code>git rebase -i HEAD~[n]</code> or
 
-<pre>git checkout $1
-git reset --soft $2
+<pre>git checkout END_SHA1
+git reset --soft START_SHA1
 git commit --amend -m "squashed history"
 TARGET=`git rev-list HEAD --max-count=1`
 git checkout master
-git rebase --onto $TARGET $2
+git rebase --onto $TARGET START_SHA1
 </pre>
 [credits for this madness](http://stackoverflow.com/questions/598672/git-how-to-squash-the-first-two-commits)
 </section>
@@ -1064,7 +1125,7 @@ git rebase --onto $TARGET $2
    <aside id="time"></aside>
 
    <!-- breadcrumb at the top -->
-   <aside id="breadcrumb">BREAD &gt; CRUMB</aside>
+   <aside id="breadcrumb"></aside>
 
    <!-- footnote in bottom middle. enter text via <aside class="footnote">...</aside>
         inside <section> -->
