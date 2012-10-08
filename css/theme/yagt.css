@@ -308,13 +308,16 @@ hr {
   left: .3em;
   z-index: 20;
   font-size: .4em;
-  color: rgba(0,0,0,.3);
+  color: rgba(0,0,0,.5);
   letter-spacing: 0;
 }
 .reveal #breadcrumb a {
   text-decoration: none;
-  color: rgba(0,0,0,.3);
+  color: rgba(0,0,0,.5);
   font-weight: normal;
+}
+.reveal #breadcrumb a:hover {
+  color: rgba(0,0,0,.8);
 }
 
 /*********************************************
