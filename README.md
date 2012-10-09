@@ -4,6 +4,10 @@ This is a fork of [reveal.js](https://github.com/hakimel/reveal.js)
 with the goal to build a talk about [Git](http://www.git-scm.org/)
 and hence explaining it.
 
+<h1>
+<a href="http://haraldschilly.github.com/yagt">READ TALK ONLINE HERE</a>
+</h1>
+
 # Authors
 
 The actual content of this talk was mainly written by
