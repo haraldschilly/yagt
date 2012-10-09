@@ -312,7 +312,7 @@ ref: refs/heads/master
 <section data-markdown bc="Committing Diagram">
 <img style="width: 95%;" src="res/commit-master.svg" />
 
-Committing
+Committing: HEAD moves and takes the branch reference with it.
 </section>
 <section data-markdown data-state="alert">
 ## Detached HEAD
@@ -358,8 +358,8 @@ There is also a safety net called "*reflog*".
 <li><code>HEAD</code> is where you are</li>
 <li class="fragment">beginning of the hashsum <code>8frfa1</code></li>
 <li class="fragment">ancestors: <code>master~</code> or <code>master~2</code> ...</li>
-<li class="fragment">parent 2 of a merge: <code>8r7af^^</code></li>
-<li class="fragment">combo move: <code>master~3^^~</code></li>
+<li class="fragment">2nd parent of a merge: <code>8r7af^2</code></li>
+<li class="fragment">combo move: <code>master~3^2~~</code></li>
 <li class="fragment">ranges: <code>master..topic1</code></li>
 <li class="fragment">branch differences: <code>master...topic2</code></li>
 </ul>
@@ -447,7 +447,7 @@ Set them this way:
 
 <section data-markdown>
 ## My Aliases
-<pre class="small"><code contenteditable>$ git aliases
+<pre class="small">$ <b>git aliases</b>
 st = status
 ci = commit
 ll = log --oneline --graph --decorate --all -20
@@ -456,7 +456,7 @@ co = checkout
 df = diff
 who = shortlog -s --
 aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'
-</code></pre>
+</pre>
 </section>
 
 <section data-markdown>
