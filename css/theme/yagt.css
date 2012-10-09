@@ -129,6 +129,7 @@ body {
   text-align: center;
   color: rgba(0,0,0,.55);
   letter-spacing: 0;
+  z-index: 30;
 }
 
 .small {
