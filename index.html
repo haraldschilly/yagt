@@ -986,7 +986,20 @@ index 97f4792..1744916 100644
 <section data-markdown>
 ## Cherry Picking
 
-Copy one changeset from one branch into another one.
+**Copy** one changeset from one branch into another one.
+This is useful to extract changes for one particular aspect
+into a separate branch.
+
+<pre>$ <b>git checkout -b fix666 [start_point]</b>
+$ <b>git cherry-pick 5d3e1b6</b>
+Finished one cherry-pick.
+[master e458a9b] Bug fix for Issue #666
+ 3 files changed, 36 insertions(+), 3 deletions(-)
+</pre>
+
+Note: Later, merging branches containing the same commits are no problem,
+since they produce the same content!
+
 </section>
 
 <section data-markdown>
@@ -995,6 +1008,18 @@ Copy one changeset from one branch into another one.
 Basically, this resets to an earlier revision and replays
 the history "in a different way" by consecutive cherry picks.
 
+Imagine, you are on a side-branch of master.
+Now, you want to move this side-branch on top of the last commit in master:
+<pre>$ <b>git checkout side-branch</b>
+$ <b>git rebase master</b>
+First, rewinding head to replay your work on top of it...
+Applying: ...
+</pre>
+
+<aside class="footnote">
+This is one of the "dangerous" commands, b/c it changes history.
+Read more <a href="http://git-scm.com/book/ch3-6.html">in the Git book</a>.
+</aside>
 </section>
 
 <section data-markdown bc="rebase example">
