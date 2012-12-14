@@ -442,7 +442,7 @@ or even small scripts.
 
 Set them this way:
 
-<pre><code contenteditable>$ git config --global alias.st status</code></pre>
+<pre><code contenteditable>$ git config --global alias.[SHORTCUT] [COMMAND ...]</code></pre>
 </section>
 
 <section data-markdown>
@@ -450,7 +450,8 @@ Set them this way:
 <pre class="small">$ <b>git aliases</b>
 st = status
 ci = commit
-ll = log --oneline --graph --decorate --all -20
+ll = log --oneline --graph --decorate -25
+lla = log --oneline --graph --decorate --all -25
 br = branch
 co = checkout
 df = diff
@@ -499,12 +500,11 @@ and project specific:<br/> edit <code>$PROJ_ROOT/.gitignore</code>
 </section>
 <section>
 <h2>Config: Ignore Files /2</h2>
-Typical entries:
+Typical entries for the global <code>~/.gitignore</code>:
 <pre class="small">*.o
 *.so
 *.class
-*.jar
-*.pdf        # generated from .tex files
+*.pyc
 *~           # temporary editor files
 *.swp        # vim temp file
 *.min.js
@@ -808,6 +808,7 @@ Share your project with collaborators via hosting services!
 <li><a href="http://code.google.com/">Google Code</a> - issue tracker and wiki</a></li>
 <li><a href="http://www.codeplex.com/">CodePlex</a> - even Microsoft talks Git</a></li>
 <li>... or a shared directory initialized with <code>git init --bare</code> usually ending in <code>*.git</code>.</li>
+<li>... or a <code>bundle</code> for the paranoid on an isolated machine :-)</li>
 </ul>
 </section>
 
@@ -854,7 +855,7 @@ Hence, the reference to the master branch on the server is <code>origin/master</
 ## Tracking
 
 Finally, you can tell Git which of your local branches
-correspond to which ones on the remote repository.
+correspond to which ones of the remote repository.
 
 This is called "*tracking*" and could be done via
 <pre>git branch --set-upstream master origin/master</pre>
@@ -899,7 +900,7 @@ at the correct positions!
 
 <code>git tag name [commit]</code> creates a named reference to a specific commit.
 
-It is very similar to a branch reference, but stays fixed.
+They are very similar to a branch reference, but stay fixed.
 
 Usually, it is used to name a specific release version, <code>v2.7.1</code>.
 
