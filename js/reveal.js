@@ -380,9 +380,9 @@ var Reveal = (function(){
 			// l, right
 			case 76: case 39: navigateRight(); triggered = true; break;
 			// k, up
-			case 75: case 38: navigateUp(); triggered = true; break;
+			case 75: case 38: navigatePrev(); triggered = true; break;
 			// j, down
-			case 74: case 40: navigateDown(); triggered = true; break;
+			case 74: case 40: navigateNext(); triggered = true; break;
 			// home
 			case 36: navigateTo( 0 ); triggered = true; break;
 			// end
